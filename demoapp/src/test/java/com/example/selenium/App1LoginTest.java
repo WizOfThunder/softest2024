@@ -29,7 +29,7 @@ import io.qameta.allure.Feature;
 /**
  * Unit test for simple App.
  */
-public class 1AppLoginTest
+public class App1LoginTest
 {
     private AppProject app;
 

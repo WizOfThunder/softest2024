@@ -29,7 +29,7 @@ import io.qameta.allure.Feature;
 /**
  * Unit test for simple App.
  */
-public class 3AppSearchTest
+public class App3SearchTest
 {
     private AppProject app;
     private static WebDriver driver;
