@@ -1,5 +1,8 @@
 # Test results
 demoapp/allure-results
 
-#Screenshots
+#Screenshots folder
 demoapp/screenshots
+
+#Target folder
+demoapp/target
