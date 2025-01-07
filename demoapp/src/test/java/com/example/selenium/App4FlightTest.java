@@ -66,24 +66,24 @@ public class App4FlightTest
         searchFlightButton();
         verifyFailedSearchFlight();
         takeScreenshot("TC011_testFailedSearchFlight");
+        resetFlightPage();
     }
 
-    // @Test
-    // @Feature("TC009 Search bar (by choice)")
-    // public void TC009_testSearchByChoice() {
-    //     WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
-    
-    //     wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#ibuHeaderSearch > div > div > div > div.gccpoi__TripSearchBox-content > input")));
-    //     searchFill("cruise");
-
-    //     wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#ibuHeaderSearch > div > div > div > div.gccpoi__TripSearchBox-content > div > div:nth-child(1) > div > div > span.gccpoi__TripSearchBox-layer-subtitle")));
-
-    //     selectChoice();
-
-    //     verifySuccessSearchByChoice();
-
-    //     takeScreenshot("TC009_testSearchByChoice");
-    // }
+    @Test
+    @Feature("TC012 Failed Search Flight (Same Destination)")
+    public void TC012_testFailedSearchFlightSameDestination(){
+        navigateToFlightPage();
+        clickOneWay();
+        clearLeavingFromTextField();
+        clickLeavingFromTextField();
+        selectLeavingFrom();
+        goingToTextField();
+        selectFailGoingTo();
+        searchFlightButton();
+        verifyFailedSearchFlightSameDestination();
+        takeScreenshot("TC012_testFailedSearchFlightSameDestination");
+        resetFlightPage();
+    }
 
     @Step("Navigate to flight page")
     private void navigateToFlightPage(){
@@ -145,6 +145,15 @@ public class App4FlightTest
         goingTo.click();
     }
 
+    @Step("Click the same destination for Going To")
+    private void selectFailGoingTo() {
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+    
+        // Ensure the dropdown options are clickable
+        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.m-flight-poi-wrapper.mt-4.nh_poi-container > div.nh_poi-hotcities > div.nh_poi-popular-container > div:nth-child(1) > div.nh_poi-city-items > div:nth-child(1) > div > div > div > span")));
+        goingTo.click();
+    }
+
     // @Step("Click search bar")
     // private void search(){
     //     WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
@@ -181,6 +190,26 @@ public class App4FlightTest
 
     @Step("Verify failed search flight (empty field)")
     private void verifyFailedSearchFlight() {
+        driver = app.getDriver();
+        // Wait for the page or element to appear
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector("#main > div.new-index-container > div.top-wrapper > div.inner-wrapper > div.searchForm-wrapper > div > div > div > form > div > div:nth-child(2) > div.m-searchForm__wrapper.m-searchForm__single-wrapper.m-searchForm__new-version.m-searchForm__oneway-wrapper > div > div > ul > li.m-searchForm__item.segment-city.flex > div.segment-info-wrapper.flex > div.m-searchForm__module.err-msg.nh_fixWidth");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+    
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success message or profile element not displayed!");
+    }
+    
+    @Step("Verify failed search flight (Same Destination)")
+    private void verifyFailedSearchFlightSameDestination() {
         driver = app.getDriver();
         // Wait for the page or element to appear
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
