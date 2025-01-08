@@ -58,6 +58,7 @@ public class App6CarsTest {
         clickAge();
         selectAge();
         searchCarsRentalButton();
+        verifySuccessSearchCarsRental();
         takeScreenshot("TC024_testSuccessSearchCarRental");
         resetTrainsPage();
     }
@@ -210,6 +211,28 @@ public class App6CarsTest {
         WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
                 "#__next > div.car-search-form-wrapper > div > div.title-wrapper > div.car-card.large.gray.car-search-form > div.car-search-content > button")));
         searchButton.click();
+    }
+
+    @Step("Verify Success Search Cars Rental")
+    private void verifySuccessSearchCarsRental() {
+        driver = app.getDriver();
+        
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+        
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+    
+        By successElementSelector = By.cssSelector(
+                "#sticky-container > div > div.car-page-inner > div > div.car-page-main > div.car-list-bar-wrapper > div.car-filter-bar > div.car-filter-bar-content > div > div > div > button");
+        
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+        
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
     }
     
     @Step("Take Screenshot")

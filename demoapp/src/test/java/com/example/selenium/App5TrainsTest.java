@@ -172,7 +172,8 @@ public class App5TrainsTest
             driver.switchTo().window(handle);
         }
     
-        By successElementSelector = By.cssSelector("#__next > div.pv > div.train-wrapper.train-flex.list-v2 > div.train-content > ul > li:nth-child(1) > h5");
+        By successElementSelector = By.cssSelector(
+                "#__next > div.pv > div.train-wrapper.train-flex.list-v2 > div.train-content > ul > li:nth-child(1) > h5");
         
         // Wait for the element to be visible
         WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
