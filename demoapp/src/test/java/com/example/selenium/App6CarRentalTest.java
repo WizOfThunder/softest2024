@@ -26,7 +26,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.Feature;
 
-public class App6CarsTest {
+public class App6CarRentalTest {
     private AppProject app;
     private static WebDriver driver;
 
@@ -39,10 +39,10 @@ public class App6CarsTest {
     }
 
     @Test
-    @Feature("TC024 Success Search Car Rental")
-    public void TC024_testSuccessSearchCarRental(){
-        navigateToCarsPage();
-        selectCarsRental();
+    @Feature("TC025 Success Search Car Rental")
+    public void TC025_testSuccessSearchCarRental(){
+        navigateToCarRentalPage();
+        selectCarRental();
         clickPickUpLocation();
         selectPickUpLocation();
         clickPickUpDate();
@@ -57,22 +57,21 @@ public class App6CarsTest {
         selectDriverLicenceCountry();
         clickAge();
         selectAge();
-        searchCarsRentalButton();
-        verifySuccessSearchCarsRental();
-        takeScreenshot("TC024_testSuccessSearchCarRental");
-        resetTrainsPage();
+        searchCarRentalButton();
+        verifySuccessSearchCarRental();
+        takeScreenshot("TC025_testSuccessSearchCarRental");
     }
     
     @Step("Navigate to cars page")
-    private void navigateToCarsPage() {
+    private void navigateToCarRentalPage() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
         WebElement carsPage = wait
                 .until(ExpectedConditions.elementToBeClickable(By.cssSelector("#header_action_nav_cars")));
         carsPage.click();
     }
 
-    @Step("Select Cars Rentals")
-    private void selectCarsRental() {
+    @Step("Select Car Rentals")
+    private void selectCarRental() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
         WebElement carRental = wait
                 .until(ExpectedConditions.elementToBeClickable(By.cssSelector("#header_action_nav_Car\\ Rentals")));
@@ -111,7 +110,7 @@ public class App6CarsTest {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
         WebElement pickUpDate = wait
                 .until(ExpectedConditions.elementToBeClickable(By.cssSelector(
-                        " #__next > div.car-search-form-wrapper > div > div.title-wrapper > div.car-card.large.gray.car-search-form > div.car-search-content > div.calendar-container > div > div.c-calendar__body > div:nth-child(1) > div > ul:nth-child(3) > li:nth-child(6)")));
+                        " #__next > div.car-search-form-wrapper > div > div.title-wrapper > div.car-card.large.gray.car-search-form > div.car-search-content > div.calendar-container > div > div.c-calendar__body > div:nth-child(2) > div > ul:nth-child(3) > li:nth-child(6)")));
         pickUpDate.click();
     }
     
@@ -147,7 +146,7 @@ public class App6CarsTest {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
         WebElement dropOffDate = wait
                 .until(ExpectedConditions.elementToBeClickable(By.cssSelector(
-                        "#__next > div.car-search-form-wrapper > div > div.title-wrapper > div.car-card.large.gray.car-search-form > div.car-search-content > div.calendar-container.select-end > div > div.c-calendar__body > div:nth-child(1) > div > ul:nth-child(4) > li:nth-child(6)")));
+                        "#__next > div.car-search-form-wrapper > div > div.title-wrapper > div.car-card.large.gray.car-search-form > div.car-search-content > div.calendar-container.select-end > div > div.c-calendar__body > div:nth-child(2) > div > ul:nth-child(4) > li:nth-child(6)")));
         dropOffDate.click();
     }
     
@@ -205,16 +204,16 @@ public class App6CarsTest {
         age.click();
     }
         
-    @Step("Click button search Cars Rental")
-    private void searchCarsRentalButton() {
+    @Step("Click button search Car Rental")
+    private void searchCarRentalButton() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
         WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
                 "#__next > div.car-search-form-wrapper > div > div.title-wrapper > div.car-card.large.gray.car-search-form > div.car-search-content > button")));
         searchButton.click();
     }
 
-    @Step("Verify Success Search Cars Rental")
-    private void verifySuccessSearchCarsRental() {
+    @Step("Verify Success Search Car Rental")
+    private void verifySuccessSearchCarRental() {
         driver = app.getDriver();
         
         // Wait for the new tab or page to load
@@ -226,7 +225,7 @@ public class App6CarsTest {
         }
     
         By successElementSelector = By.cssSelector(
-                "#sticky-container > div > div.car-page-inner > div > div.car-page-main > div.car-list-bar-wrapper > div.car-filter-bar > div.car-filter-bar-content > div > div > div > button");
+                "#sticky-container > div > div.car-page-inner > div > div.car-page-main > div.car-progress > div");
         
         // Wait for the element to be visible
         WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
@@ -260,8 +259,8 @@ public class App6CarsTest {
         }
     }
     
-    @Step("Reset Cars Rental Page")
-    private void resetTrainsPage() {
+    @Step("Reset Car Rental Page")
+    private void resetCarRentalPage() {
         driver.manage().deleteAllCookies();
 
         // Execute JavaScript to clear localStorage and sessionStorage
@@ -272,4 +271,9 @@ public class App6CarsTest {
         driver.navigate().to("https://id.trip.com/carhire/?channelid=14409&locale=en-ID&curr=IDR");
     }
 
+    @AfterClass
+    @Description("Close Browser")
+    public void tearDown(){
+        app.closBrowser();
+    }
 }

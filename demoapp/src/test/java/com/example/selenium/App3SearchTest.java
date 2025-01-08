@@ -43,8 +43,8 @@ public class App3SearchTest
     }
 
     @Test
-    @Feature("TC008 Search bar (by input)")
-    public void TC008_testSearchByInput(){
+    @Feature("TC009 Search bar (by input)")
+    public void TC009_testSearchByInput(){
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#ibuHeaderSearch > div > div > div > div.gccpoi__TripSearchBox-content > input"))); // Wait for the search bar to appear
 
@@ -54,14 +54,14 @@ public class App3SearchTest
 
         verifySuccessSearchByInput();
 
-        takeScreenshot("TC008_testSearchByInput");
+        takeScreenshot("TC009_testSearchByInput");
 
         resetPage();
     }
 
     @Test
-    @Feature("TC009 Search bar (by choice)")
-    public void TC009_testSearchByChoice() {
+    @Feature("TC010 Search bar (by choice)")
+    public void TC010_testSearchByChoice() {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#ibuHeaderSearch > div > div > div > div.gccpoi__TripSearchBox-content > input")));
@@ -73,7 +73,7 @@ public class App3SearchTest
 
         verifySuccessSearchByChoice();
 
-        takeScreenshot("TC009_testSearchByChoice");
+        takeScreenshot("TC010_testSearchByChoice");
     }
 
     @Step("Click button search")

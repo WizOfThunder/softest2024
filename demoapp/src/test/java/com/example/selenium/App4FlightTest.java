@@ -43,8 +43,8 @@ public class App4FlightTest
     }
 
     @Test
-    @Feature("TC010 Success Search Flight")
-    public void TC010_testSuccessSearchFlight(){
+    @Feature("TC011 Success Search Flight")
+    public void TC011_testSuccessSearchFlight(){
         navigateToFlightPage();
         clickOneWay();
         clearLeavingFromTextField();
@@ -54,25 +54,24 @@ public class App4FlightTest
         selectGoingTo();
         searchFlightButton();
         verifySuccessSearchFlight();
-        takeScreenshot("TC010_testSuccessSearchFlight");
+        takeScreenshot("TC011_testSuccessSearchFlight");
         resetFlightPage();
     }
 
     @Test
-    @Feature("TC011 Failed Search Flight (Empty Field)")
-    public void TC011_testFailedSearchFlight(){
+    @Feature("TC012 Failed Search Flight (Empty Field)")
+    public void TC012_testFailedSearchFlight(){
         clickOneWay();
         clearLeavingFromTextField();
         searchFlightButton();
         verifyFailedSearchFlight();
-        takeScreenshot("TC011_testFailedSearchFlight");
+        takeScreenshot("TC012_testFailedSearchFlight");
         resetFlightPage();
     }
 
     @Test
-    @Feature("TC012 Failed Search Flight (Same Destination)")
-    public void TC012_testFailedSearchFlightSameDestination(){
-        navigateToFlightPage();
+    @Feature("TC013 Failed Search Flight (Same Destination)")
+    public void TC013_testFailedSearchFlightSameDestination(){
         clickOneWay();
         clearLeavingFromTextField();
         clickLeavingFromTextField();
@@ -81,7 +80,7 @@ public class App4FlightTest
         selectFailGoingTo();
         searchFlightButton();
         verifyFailedSearchFlightSameDestination();
-        takeScreenshot("TC012_testFailedSearchFlightSameDestination");
+        takeScreenshot("TC013_testFailedSearchFlightSameDestination");
         resetFlightPage();
     }
 

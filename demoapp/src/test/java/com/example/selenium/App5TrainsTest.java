@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -43,8 +44,8 @@ public class App5TrainsTest
     }
 
     @Test
-    @Feature("TC017 Success Search Trains")
-    public void TC017_testSuccessSearchTrains(){
+    @Feature("TC018 Success Search Trains")
+    public void TC018_testSuccessSearchTrains(){
         navigateToTrainsPage();
         clickLeavingFromTextField();
         selectLeavingFrom();
@@ -52,30 +53,36 @@ public class App5TrainsTest
         clickHighSpeedCheckbox();
         searchTrainsButton();
         verifySuccessSearchTrains();
-        takeScreenshot("TC017_testSuccessSearchTrains");
+        takeScreenshot("TC018_testSuccessSearchTrains");
         resetTrainsPage();
     }
 
     @Test
-    @Feature("TC018 Failed Search Trains (Empty Field)")
-    public void TC018_testFailedSearchTrains(){
+    @Feature("TC019 Failed Search Trains (Empty Field)")
+    public void TC019_testFailedSearchTrains(){
+        clickLeavingFromTextField();
+        emptyLeavingFromTextField();
+        clickGoingToTextField();
+        emptyGoingToTextField();
+        searchTrainsButton();
+        clickLeavingFromTextField();
+        emptyLeavingFromTextField();
         searchTrainsButton();
         verifyFailedSearchTrains();
-        takeScreenshot("TC018_testFailedSearchTrains");
+        takeScreenshot("TC019_testFailedSearchTrains");
         resetTrainsPage();
     }
 
     @Test
-    @Feature("TC019 Failed Search Trains (Same Destination)")
-    public void TC019_testFailedSearchTrainsSameDestination(){
-        navigateToTrainsPage();
+    @Feature("TC020 Failed Search Trains (Same Destination)")
+    public void TC020_testFailedSearchTrainsSameDestination(){
         clickLeavingFromTextField();
         selectLeavingFrom();
         selectFailGoingTo();
         clickHighSpeedCheckbox();
         searchTrainsButton();
         verifyFailedSearchTrainsSameDestination();
-        takeScreenshot("TC019_testFailedSearchTrainsSameDestination");
+        takeScreenshot("TC020_testFailedSearchTrainsSameDestination");
     }
 
     @Step("Navigate to trains page")
@@ -113,6 +120,13 @@ public class App5TrainsTest
         leavingFromField.click();
     }
 
+    @Step("Empty Leaving From text field")
+    private void emptyLeavingFromTextField(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement leavingFromField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div.CityPicker_container___pdTr.CityPicker_divider__nc3eJ > div.open-component.trip-seo-search-box-open-component.online > div > div > input")));
+        leavingFromField.sendKeys(Keys.BACK_SPACE);
+    }
+
     @Step("Click Leaving From choice")
     private void selectLeavingFrom() {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
@@ -123,10 +137,17 @@ public class App5TrainsTest
     }
 
     @Step("Click going to text field")
-    private void goingToTextField(){
+    private void clickGoingToTextField(){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
         WebElement goingToField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div:nth-child(3) > div > span > input")));
         goingToField.click();
+    }
+
+    @Step("Empty going to text field")
+    private void emptyGoingToTextField(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement goingToField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div:nth-child(3) > div.open-component.trip-seo-search-box-open-component.online > div > div > input")));
+        goingToField.sendKeys(Keys.BACK_SPACE);
     }
 
     @Step("Click Going To choice")
