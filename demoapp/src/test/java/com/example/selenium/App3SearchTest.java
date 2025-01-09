@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
@@ -22,9 +24,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.Feature;
+
+import java.nio.file.Files;
 
 /**
  * Unit test for simple App.
@@ -45,6 +50,9 @@ public class App3SearchTest
     @Test
     @Feature("TC009 Search bar (by input)")
     public void TC009_testSearchByInput(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#ibuHeaderSearch > div > div > div > div.gccpoi__TripSearchBox-content > input"))); // Wait for the search bar to appear
 
@@ -57,11 +65,17 @@ public class App3SearchTest
         takeScreenshot("TC009_testSearchByInput");
 
         resetPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
     }
 
     @Test
     @Feature("TC010 Search bar (by choice)")
     public void TC010_testSearchByChoice() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#ibuHeaderSearch > div > div > div > div.gccpoi__TripSearchBox-content > input")));
@@ -74,6 +88,9 @@ public class App3SearchTest
         verifySuccessSearchByChoice();
 
         takeScreenshot("TC010_testSearchByChoice");
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
     }
 
     @Step("Click button search")
@@ -174,8 +191,30 @@ public class App3SearchTest
             // If a file with the same name exists, overwrite it
             FileUtils.copyFile(source, destinationFile);
             System.out.println("Screenshot saved to: " + destination);
+
+            // Attach screenshot to Allure report
+            attachScreenshot(destinationFile);
         } catch (IOException e) {
             System.out.println("Failed to save screenshot: " + e.getMessage());
+        }
+    }
+
+    @Attachment(value = "{description}", type = "text/plain")
+    public String attachTimestamp(String description, String timestamp) {
+        return timestamp;
+    }
+
+    private String getCurrentTimestamp() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Attachment(value = "Screenshot", type = "image/png")
+    private byte[] attachScreenshot(File screenshotFile) {
+        try {
+            return Files.readAllBytes(screenshotFile.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new byte[0];
         }
     }
 

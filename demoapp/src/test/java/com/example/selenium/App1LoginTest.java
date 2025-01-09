@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
@@ -22,9 +24,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.Feature;
+
+import java.nio.file.Files;
 
 /**
  * Unit test for simple App.
@@ -43,6 +48,9 @@ public class App1LoginTest
     @Test
     @Feature("TC002 Success Login (using password)")
     public void TC002_testCorrectPassword(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
         WebDriver driver = app.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".oh-pwa"))); // Wait for the pop up to appear
@@ -68,11 +76,17 @@ public class App1LoginTest
         takeScreenshot("TC002_TestCorrectPassword");
 
         resetPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
     }
 
     @Test
     @Feature("TC003 Failed Login (invalid email)")
     public void TC003_testInvalidEmailLogin(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
         WebDriver driver = app.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".oh-pwa"))); // Wait for the pop up to appear
@@ -91,11 +105,17 @@ public class App1LoginTest
         takeScreenshot("TC003_TestInvalidEmail");
 
         resetPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
     }
 
     @Test
     @Feature("TC005 Failed Login (invalid password)")
     public void TC005_testIncorrectPassword(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
         WebDriver driver = app.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".oh-pwa"))); // Wait for the pop up to appear
@@ -119,6 +139,9 @@ public class App1LoginTest
         verifyIncorrectPassword();
 
         takeScreenshot("TC005_TestIncorrectPassword");
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
     }
 
     @Step("Close blocking element")
@@ -247,8 +270,30 @@ public class App1LoginTest
             // If a file with the same name exists, overwrite it
             FileUtils.copyFile(source, destinationFile);
             System.out.println("Screenshot saved to: " + destination);
+
+            // Attach screenshot to Allure report
+            attachScreenshot(destinationFile);
         } catch (IOException e) {
             System.out.println("Failed to save screenshot: " + e.getMessage());
+        }
+    }
+
+    @Attachment(value = "{description}", type = "text/plain")
+    public String attachTimestamp(String description, String timestamp) {
+        return timestamp;
+    }
+
+    private String getCurrentTimestamp() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Attachment(value = "Screenshot", type = "image/png")
+    private byte[] attachScreenshot(File screenshotFile) {
+        try {
+            return Files.readAllBytes(screenshotFile.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new byte[0];
         }
     }
 

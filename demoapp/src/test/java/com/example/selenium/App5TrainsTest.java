@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
@@ -23,9 +25,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.Feature;
+
+import java.nio.file.Files;
 
 /**
  * Unit test for simple App.
@@ -46,6 +51,9 @@ public class App5TrainsTest
     @Test
     @Feature("TC018 Success Search Trains")
     public void TC018_testSuccessSearchTrains(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
         navigateToTrainsPage();
         clickLeavingFromTextField();
         selectLeavingFrom();
@@ -55,11 +63,17 @@ public class App5TrainsTest
         verifySuccessSearchTrains();
         takeScreenshot("TC018_testSuccessSearchTrains");
         resetTrainsPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
     }
 
     @Test
     @Feature("TC019 Failed Search Trains (Empty Field)")
     public void TC019_testFailedSearchTrains(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
         clickLeavingFromTextField();
         emptyLeavingFromTextField();
         clickGoingToTextField();
@@ -71,11 +85,17 @@ public class App5TrainsTest
         verifyFailedSearchTrains();
         takeScreenshot("TC019_testFailedSearchTrains");
         resetTrainsPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
     }
 
     @Test
     @Feature("TC020 Failed Search Trains (Same Destination)")
     public void TC020_testFailedSearchTrainsSameDestination(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
         clickLeavingFromTextField();
         selectLeavingFrom();
         selectFailGoingTo();
@@ -83,6 +103,9 @@ public class App5TrainsTest
         searchTrainsButton();
         verifyFailedSearchTrainsSameDestination();
         takeScreenshot("TC020_testFailedSearchTrainsSameDestination");
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
     }
 
     @Step("Navigate to trains page")
@@ -275,8 +298,30 @@ public class App5TrainsTest
             // If a file with the same name exists, overwrite it
             FileUtils.copyFile(source, destinationFile);
             System.out.println("Screenshot saved to: " + destination);
+
+            // Attach screenshot to Allure report
+            attachScreenshot(destinationFile);
         } catch (IOException e) {
             System.out.println("Failed to save screenshot: " + e.getMessage());
+        }
+    }
+
+    @Attachment(value = "{description}", type = "text/plain")
+    public String attachTimestamp(String description, String timestamp) {
+        return timestamp;
+    }
+
+    private String getCurrentTimestamp() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Attachment(value = "Screenshot", type = "image/png")
+    private byte[] attachScreenshot(File screenshotFile) {
+        try {
+            return Files.readAllBytes(screenshotFile.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new byte[0];
         }
     }
 

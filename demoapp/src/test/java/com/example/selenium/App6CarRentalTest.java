@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
@@ -14,6 +16,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -22,9 +25,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.Feature;
+
+import java.nio.file.Files;
 
 public class App6CarRentalTest {
     private AppProject app;
@@ -41,6 +47,9 @@ public class App6CarRentalTest {
     @Test
     @Feature("TC025 Success Search Car Rental")
     public void TC025_testSuccessSearchCarRental(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
         navigateToCarRentalPage();
         selectCarRental();
         clickPickUpLocation();
@@ -60,6 +69,9 @@ public class App6CarRentalTest {
         searchCarRentalButton();
         verifySuccessSearchCarRental();
         takeScreenshot("TC025_testSuccessSearchCarRental");
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
     }
     
     @Step("Navigate to cars page")
@@ -254,6 +266,9 @@ public class App6CarRentalTest {
             // If a file with the same name exists, overwrite it
             FileUtils.copyFile(source, destinationFile);
             System.out.println("Screenshot saved to: " + destination);
+
+            // Attach screenshot to Allure report
+            attachScreenshot(destinationFile);
         } catch (IOException e) {
             System.out.println("Failed to save screenshot: " + e.getMessage());
         }
@@ -269,6 +284,25 @@ public class App6CarRentalTest {
         js.executeScript("window.sessionStorage.clear();");
 
         driver.navigate().to("https://id.trip.com/carhire/?channelid=14409&locale=en-ID&curr=IDR");
+    }
+
+    @Attachment(value = "{description}", type = "text/plain")
+    public String attachTimestamp(String description, String timestamp) {
+        return timestamp;
+    }
+
+    private String getCurrentTimestamp() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Attachment(value = "Screenshot", type = "image/png")
+    private byte[] attachScreenshot(File screenshotFile) {
+        try {
+            return Files.readAllBytes(screenshotFile.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new byte[0];
+        }
     }
 
     @AfterClass
