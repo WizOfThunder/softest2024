@@ -58,6 +58,7 @@ public class App5TrainsTest
         clickLeavingFromTextField();
         selectLeavingFrom();
         selectGoingTo();
+        clickDepatureTime();
         clickHighSpeedCheckbox();
         searchTrainsButton();
         verifySuccessSearchTrains();
@@ -191,12 +192,12 @@ public class App5TrainsTest
         goingTo.click();
     }
 
-    // @Step("Click search bar")
-    // private void search(){
-    //     WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-    //     WebElement searchBar = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#ibuHeaderSearch > div > div > div > div.gccpoi__TripSearchBox-content > input")));
-    //     searchBar.click();
-    // }
+    @Step("Select Departure Time")
+    private void clickDepatureTime(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement departure = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.open-component.trip-seo-search-box-open-component.online > div > div > div.c-calendar__body > div:nth-child(2) > div.c-calendar-month__days > ul:nth-child(3) > li:nth-child(4) > div > span.day")));
+        departure.click();
+    }
     
     // @Step("Input search with Input:{input}")
     // private void searchFill(String input){
