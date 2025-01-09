@@ -45,8 +45,8 @@ public class App9CruiseTest {
     }
     
     @Test
-    @Feature("TC046 Success Search Cruise")
-    public void TC046_testSuccessSearchCruise() {
+    @Feature("TC046 Success Search Cruise (with Input)")
+    public void TC046_testSuccessSearchCruiseWithInput() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
         navigateToCruisePage();
@@ -57,22 +57,22 @@ public class App9CruiseTest {
         clickMonthOfDeparture();
         selectMonthOfDeparture();
         searchCruiseButton();
-        verifySuccessSearchCruise();
-        takeScreenshot("TC046_testSuccessSearchCruise");
+        verifySuccessSearchCruiseWithInput();
+        takeScreenshot("TC046_testSuccessSearchCruiseWithInput");
         resetCruisePage();
         String endTime = getCurrentTimestamp();
         attachTimestamp("Test End Time", endTime);
     }
 
     @Test
-    @Feature("TC047 Fail Search Cruise")
-    public void TC047_testFailSearchCruise() {
+    @Feature("TC047 Success Search Cruise No Input")
+    public void TC047_testSuccessSearchCruiseNoInput() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
         searchCruiseButton();
-        verifyFailSearchCruise();
-        takeScreenshot("TC047_testFailSearchCruise");
+        verifySuccessSearchCruiseNoInput();
+        takeScreenshot("TC047_testSuccessSearchCruiseNoInput");
         resetCruisePage();
 
         String endTime = getCurrentTimestamp();
@@ -209,8 +209,8 @@ public class App9CruiseTest {
         }
     }
 
-    @Step("Verify Success Search Cruise")
-    private void verifySuccessSearchCruise() {
+    @Step("Verify Success Search Cruise With Input")
+    private void verifySuccessSearchCruiseWithInput() {
         driver = app.getDriver();
 
         // Wait for the new tab or page to load
@@ -231,8 +231,8 @@ public class App9CruiseTest {
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
     }
 
-    @Step("Verify Fail Search Cruise")
-    private void verifyFailSearchCruise() {
+    @Step("Verify Success Search Cruise No Input")
+    private void verifySuccessSearchCruiseNoInput() {
         driver = app.getDriver();
 
         // Wait for the new tab or page to load
