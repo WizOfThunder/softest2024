@@ -112,6 +112,8 @@ public class App6CarRentalTest {
     public void TC027_testFailedSearchCarsRentals() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
+        clickPickUpLocationTextField();
+        emptyPickUpLocationTextField();
         searchCarRentalButton();
         verifyFailSearchCarRental();
         takeScreenshot("TC027_testFailedSearchCarsRentals");
@@ -143,6 +145,24 @@ public class App6CarRentalTest {
                 .until(ExpectedConditions.elementToBeClickable(By.cssSelector(
                         "#__next > div.car-search-form-wrapper > div > div.title-wrapper > div.car-card.large.gray.car-search-form > div.car-search-content > div.car-location-form-wrapper > div > div > div > div.car-select.location-picker > div > div")));
         pickUpLocation.click();
+    }
+
+    @Step("Click Pick Up Text Field")
+    private void clickPickUpLocationTextField() {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement pickUpTextField = wait
+                .until(ExpectedConditions.elementToBeClickable(By.cssSelector(
+                        "#__next > div.car-search-form-wrapper > div > div.title-wrapper > div.car-card.large.gray.car-search-form > div.car-search-content > div.car-location-form-wrapper > div > div > div > div > div > div > button > span > div > input")));
+        pickUpTextField.click();
+    }
+
+    @Step("Empty Pick Up Text Field")
+    private void emptyPickUpLocationTextField() {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement pickUpTextField = wait
+                .until(ExpectedConditions.elementToBeClickable(By.cssSelector(
+                        "#__next > div.car-search-form-wrapper > div > div.title-wrapper > div.car-card.large.gray.car-search-form > div.car-search-content > div.car-location-form-wrapper > div > div > div > div > div > div > button > span > div > input")));
+        pickUpTextField.sendKeys(Keys.BACK_SPACE);
     }
       
     @Step("Select Pick Up Location")
@@ -326,7 +346,7 @@ public class App6CarRentalTest {
         }
 
         By successElementSelector = By.cssSelector(
-                "#sticky-container > div > div.car-page-inner > div > div.car-page-main > div.car-list-bar-wrapper > div.car-filter-bar > div.car-filter-bar-content > div > div > div > button");
+                ".car-toast-inner.car-ani.fade-in-down");
 
         // Wait for the element to be visible
         WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
