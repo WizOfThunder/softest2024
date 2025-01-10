@@ -35,7 +35,7 @@ import java.nio.file.Files;
 /**
  * Unit test for simple App.
  */
-public class App8AttractionTest
+public class App08AttractionTest
 {
     private AppProject app;
     private static WebDriver driver;

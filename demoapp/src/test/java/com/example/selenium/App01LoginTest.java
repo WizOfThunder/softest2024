@@ -34,7 +34,7 @@ import java.nio.file.Files;
 /**
  * Unit test for simple App.
  */
-public class App1LoginTest
+public class App01LoginTest
 {
     private AppProject app;
 

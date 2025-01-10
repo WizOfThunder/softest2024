@@ -32,7 +32,7 @@ import io.qameta.allure.Feature;
 
 import java.nio.file.Files;
 
-public class App6CarRentalTest {
+public class App06CarRentalTest {
     private AppProject app;
     private static WebDriver driver;
 
