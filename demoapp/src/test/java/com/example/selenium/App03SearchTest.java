@@ -60,7 +60,7 @@ public class App03SearchTest
        
         searchButton();
 
-        verifySuccessSearchByInput();
+        verifySuccessSearchByInput("cruise");
 
         takeScreenshot("TC009_testSearchByInput");
 
@@ -85,7 +85,7 @@ public class App03SearchTest
 
         selectChoice();
 
-        verifySuccessSearchByChoice();
+        verifySuccessSearchByChoice("Disney Cruise Line");
 
         takeScreenshot("TC010_testSearchByChoice");
 
@@ -119,7 +119,7 @@ public class App03SearchTest
     }
 
     @Step("Verify success search by input")
-    private void verifySuccessSearchByInput() {
+    private void verifySuccessSearchByInput(String result) {
         driver = app.getDriver();
         
         // Wait for the new tab or page to load
@@ -130,17 +130,17 @@ public class App03SearchTest
             driver.switchTo().window(handle);
         }
     
-        By successElementSelector = By.cssSelector("#__next > div.travel_guide_root_class.add_font-family > div > div.Warp-sc-1tzhqxn-0.jRnLmQ.gl-cpt-breadcrumb-search");
+        By successElementSelector = By.cssSelector("#__next > div.travel_guide_root_class.add_font-family > div > div.page-title > span");
         
         // Wait for the element to be visible
         WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
         
         // Assert the element is displayed
-        Assert.assertTrue(successElement.isDisplayed(), "Success message or profile element not displayed!");
+        Assert.assertTrue(successElement.getText().contains(result), "Success message or profile element not displayed!");
     }
 
     @Step("Verify success search by choice")
-    private void verifySuccessSearchByChoice() {
+    private void verifySuccessSearchByChoice(String result) {
         driver = app.getDriver();
         // Wait for the page or element to appear
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
@@ -156,7 +156,7 @@ public class App03SearchTest
         WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
     
         // Assert the element is displayed
-        Assert.assertTrue(successElement.isDisplayed(), "Success message or profile element not displayed!");
+        Assert.assertTrue(successElement.getText().contains(result), "Success message or profile element not displayed!");
     }
 
     @Step("Reset Page")

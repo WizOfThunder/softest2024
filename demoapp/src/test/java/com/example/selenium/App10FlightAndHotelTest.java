@@ -55,7 +55,7 @@ public class App10FlightAndHotelTest
         attachTimestamp("Test Start Time", startTime);
 
         navigateToFlightAndHotelPage();
-        clickFlightOptionDropdown();
+        clickFlightAndRoomOptionDropdown();
         selectRoundTripOption();
         clickGoingFromTextField();
         emptyGoingFromTextField();
@@ -81,23 +81,66 @@ public class App10FlightAndHotelTest
         attachTimestamp("Test End Time", endTime);
     }
 
-    // @Test
-    // @Feature("TC041 Success Search FlightAndHotels & Tours By FlightAndHotel Name")
-    // public void TC041_testSuccessSearchFlightAndHotel(){
-    //     String startTime = getCurrentTimestamp();
-    //     attachTimestamp("Test Start Time", startTime);
+    @Test
+    @Feature("TC053 Search Flight & Hotel (One-Way)")
+    public void TC053_testSuccessSearchFlightAndHotelOneWay(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
 
-    //     clickCityTextField();
-    //     selectCity();
-    //     clickFlightAndHotelTextField();
-    //     selectFlightAndHotel();
-    //     verifySuccessSearchFlightAndHotel();
-    //     takeScreenshot("TC041_testSuccessSearchFlightAndHotel");
-    //     //resetFlightAndHotelPage();
+        clickFlightAndRoomOptionDropdown();
+        selectOneWayOption();
+        clickPeopleAndRoomDropdown();
+        clickAddRoom();
+        clickAddAdult();
+        clickAddChildren();
+        clickAddInfant();
+        clickChildrenAge();
+        selectChildrenAge(15);
+        clickInfantAge();
+        selectInfantAge("1");
+        doneFlightAndRoomOptionDropdown();
+        clickGoingFromTextField();
+        emptyGoingFromTextField();
+        selectGoingFromCity();
+        emptyGoingToTextField();
+        selectGoingToCity();
+        clickDestinationTextField();
+        emptyDestinationTextField();
+        selectDestinationCity();
+        clickDepartTextField();
+        selectDepartTime();
+        clickCheckInTextField();
+        selectCheckInTime();
+        selectCheckOutTime();
+        searchFlightAndHotelButton();
+        verifySuccessSearchFlightAndHotelOneWay();
 
-    //     String endTime = getCurrentTimestamp();
-    //     attachTimestamp("Test End Time", endTime);
-    // }
+        takeScreenshot("TC053_testSuccessSearchFlightAndHotelOneWay");
+        resetFlightAndHotelPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
+    @Feature("TC054 Failed Search Flight & Hotel (Same Destination)")
+    public void TC054_testFailedSearchFlightAndHotelSameDestination(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
+        clickGoingFromTextField();
+        emptyGoingFromTextField();
+        selectGoingFromCity();
+        emptyGoingToTextField();
+        selecFailtGoingToCity();
+        searchFlightAndHotelButton();
+        verifyFailedSearchFlightAndHotelSameDestination();
+
+        takeScreenshot("TC054_testFailedSearchFlightAndHotelSameDestination");
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
 
     @Step("Navigate to Flight & Hotel page")
     private void navigateToFlightAndHotelPage(){
@@ -112,18 +155,96 @@ public class App10FlightAndHotelTest
         WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#__next > div.ibu-bundle-container > div.top > div.search-bar > div > div.fh-searchForm-content > div.right > div.ic_button")));
         searchButton.click();
     }
-    
-    // @Step("Clear going to recent searches")
-    // private void clearGoingToRecentSearches(){
-    //     WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-    //     WebElement clearGoingToRecentSearches = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div:nth-child(3) > div.open-component.trip-seo-search-box-open-component.online > div > div > div > div > div:nth-child(1) > i")));
-    //     clearGoingToRecentSearches.click();
-    // }
+
+    @Step("Click add room")
+    private void clickAddRoom(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement room = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.fh-sf-trigger-popup > div > div:nth-child(4) > div.right > div:nth-child(3) > i")));
+        room.click();
+    }
+
+    @Step("Click add adult")
+    private void clickAddAdult(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement adult = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.fh-sf-trigger-popup > div > div:nth-child(6) > div.right > div:nth-child(3) > i")));
+        adult.click();
+    }
+
+    @Step("Click add children")
+    private void clickAddChildren(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement children = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.fh-sf-trigger-popup > div > div:nth-child(7) > div.right > div:nth-child(3) > i")));
+        children.click();
+    }
+
+    @Step("Click add infant")
+    private void clickAddInfant(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement infant = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.fh-sf-trigger-popup > div > div:nth-child(8) > div.right > div:nth-child(3) > i")));
+        infant.click();
+    }
+
+    @Step("Click children age")
+    private void clickChildrenAge(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement children = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.fh-sf-trigger-popup > div > div.ages-select > div:nth-child(1) > div > div > div")));
+        
+        // Scroll into view
+        ((JavascriptExecutor) app.getDriver()).executeScript("arguments[0].scrollIntoView({block: 'center'});", children);
+
+        // Add a small wait to ensure the scroll is complete
+        try {
+            Thread.sleep(500); // Adjust duration as needed
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        children.click();
+    }
+
+    @Step("Select children age")
+    private void selectChildrenAge(int age){
+        int childAge = age-1;
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement children = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(30) > div > div:nth-child("+ childAge +") > label")));
+        children.click();
+    }
+
+    @Step("Click infant age")
+    private void clickInfantAge(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement infant = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.fh-sf-trigger-popup > div > div.ages-select > div:nth-child(2) > div > div > div")));
+        infant.click();
+    }
+
+    @Step("Select infant age")
+    private void selectInfantAge(String age){
+        int infantAge = 0;
+        if (age.equals("<1")) {
+            infantAge = 1;
+        } else {
+            infantAge = 2;
+        }
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement infant = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(30) > div > div:nth-child("+ infantAge +") > label")));
+        infant.click();
+    }
 
     @Step("Click Going From text field")
     private void clickGoingFromTextField(){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
         WebElement CityTextField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#from")));
+        
+        // Scroll into view
+        ((JavascriptExecutor) app.getDriver()).executeScript("arguments[0].scrollIntoView({block: 'center'});", CityTextField);
+
+        // Add a small wait to ensure the scroll is complete
+        try {
+            Thread.sleep(500); // Adjust duration as needed
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
         CityTextField.click();
     }
 
@@ -163,6 +284,15 @@ public class App10FlightAndHotelTest
     
         // Ensure the dropdown options are clickable
         WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.m-flight-poi-wrapper.overflow-scroll.mt-4.fh-bundle-poi.is-hotcity > ul > li:nth-child(1) > ul > li:nth-child(2) > span")));
+        goingTo.click();
+    }
+
+    @Step("Select Going To city (same as Going From)")
+    private void selecFailtGoingToCity() {
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+    
+        // Ensure the dropdown options are clickable
+        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.m-flight-poi-wrapper.overflow-scroll.mt-4.fh-bundle-poi.is-hotcity > ul > li:nth-child(1) > ul > li:nth-child(1) > span")));
         goingTo.click();
     }
 
@@ -239,12 +369,21 @@ public class App10FlightAndHotelTest
         checkOut.click();
     }
 
-    @Step("Click Flight Option Dropdown")
-    private void clickFlightOptionDropdown() {
+    @Step("Click Flight & Room Option Dropdown")
+    private void clickFlightAndRoomOptionDropdown() {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
         WebElement flightoption = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#__next > div.ibu-bundle-container > div.top > div.search-bar > div > div.fh-searchForm-header > div > div.fh-sf-trigger.fh-sf-drop-down.fh-sf-dropdown-trigger.fh-trip-way > div")));
+        flightoption.click();
+    }
+
+    @Step("Click done on Flight Option Dropdown")
+    private void doneFlightAndRoomOptionDropdown() {
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+    
+        // Ensure the dropdown options are clickable
+        WebElement flightoption = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".done")));
         flightoption.click();
     }
 
@@ -286,12 +425,12 @@ public class App10FlightAndHotelTest
     //     emailField.sendKeys(input);
     // }
 
-    @Step("Verify success search FlightAndHotels & Tours (Round-Trip)")
+    @Step("Verify success search Flight & Hotels (Round-Trip)")
     private void verifySuccessSearchFlightAndHotelRoundTrip() {
         driver = app.getDriver();
         
         // Wait for the new tab or page to load
-        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(100));
         
         // Switch to the newly opened tab if applicable
         for (String handle : driver.getWindowHandles()) {
@@ -308,27 +447,49 @@ public class App10FlightAndHotelTest
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
     }
 
-    // @Step("Verify success search FlightAndHotels & Tours By FlightAndHotel Name")
-    // private void verifySuccessSearchFlightAndHotelOneWay() {
-    //     driver = app.getDriver();
+    @Step("Verify success search Flight & Hotels (Round-Trip)")
+    private void verifySuccessSearchFlightAndHotelOneWay() {
+        driver = app.getDriver();
         
-    //     // Wait for the new tab or page to load
-    //     WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(100));
         
-    //     // Switch to the newly opened tab if applicable
-    //     for (String handle : driver.getWindowHandles()) {
-    //         driver.switchTo().window(handle);
-    //     }
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
     
-    //     By successElementSelector = By.cssSelector(
-    //             "#poi\\.detail\\.overview > div > div.TopBoxStyle-sc-2jpvue-4.cKCoNt > div.top-left > div.top-box > div > div.poi-page-title > h1");
+        By successElementSelector = By.cssSelector(
+                "#__next > div.jj-list-container > div:nth-child(5) > div > div.jj-right.pt16 > div.bg7.jj-flight.mb16.pt12 > div:nth-child(1) > div.bg7.jj-flight-item.plr24.pb12.pt12 > div > div > div > a:nth-child(2)");
         
-    //     // Wait for the element to be visible
-    //     WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
         
-    //     // Assert the element is displayed
-    //     Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
-    // }
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
+    @Step("Verify success search Flight & Hotels (Round-Trip)")
+    private void verifyFailedSearchFlightAndHotelSameDestination() {
+        driver = app.getDriver();
+        
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+        
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+    
+        By successElementSelector = By.cssSelector(
+                "body > div.fh-sf-trigger-popup.fh-sf-hover-popup-content.error-popover > span");
+        
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+        
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
 
     @Step("Reset Flight & Hotel Page")
     private void resetFlightAndHotelPage() {
