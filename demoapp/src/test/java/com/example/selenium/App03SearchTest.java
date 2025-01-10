@@ -34,7 +34,7 @@ import java.nio.file.Files;
 /**
  * Unit test for simple App.
  */
-public class App3SearchTest
+public class App03SearchTest
 {
     private AppProject app;
     private static WebDriver driver;
