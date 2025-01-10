@@ -83,7 +83,7 @@ public class App03SearchTest
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#ibuHeaderSearch > div > div > div > div.gccpoi__TripSearchBox-content > div > div:nth-child(1) > div > div > span.gccpoi__TripSearchBox-layer-subtitle")));
 
-        selectChoice();
+        selectChoice("Disney Cruise Line");
 
         verifySuccessSearchByChoice("Disney Cruise Line");
 
@@ -99,11 +99,14 @@ public class App03SearchTest
     }
 
     @Step("Click dropdown choice")
-    private void selectChoice() {
+    private void selectChoice(String choice) {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
-        // Ensure the dropdown options are clickable
-        WebElement firstOption = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#ibuHeaderSearch > div > div > div > div.gccpoi__TripSearchBox-content > div > div:nth-child(1) > div > div > span.gccpoi__TripSearchBox-layer-subtitle")));
+        // Dynamically build the XPath using the 'choice' parameter
+        WebElement firstOption = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("(//*[@id='ibuHeaderSearch']//*[contains(text(), '" + choice.split(" ")[0] + "') and contains(., '" + choice.split(" ")[1] + "') and contains(., '" + choice.split(" ")[2] + "')])[1]")
+        ));
+    
         firstOption.click();
     }
 

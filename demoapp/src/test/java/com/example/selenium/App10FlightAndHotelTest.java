@@ -59,12 +59,12 @@ public class App10FlightAndHotelTest
         selectRoundTripOption();
         clickGoingFromTextField();
         emptyGoingFromTextField();
-        selectGoingFromCity();
+        selectGoingFromCity("Jakarta");
         emptyGoingToTextField();
-        selectGoingToCity();
+        selectGoingToCity("Bali");
         clickDestinationTextField();
         emptyDestinationTextField();
-        selectDestinationCity();
+        selectDestinationCity("Bali");
         clickDepartTextField();
         selectDepartTime();
         selectReturnTime();
@@ -101,12 +101,12 @@ public class App10FlightAndHotelTest
         doneFlightAndRoomOptionDropdown();
         clickGoingFromTextField();
         emptyGoingFromTextField();
-        selectGoingFromCity();
+        selectGoingFromCity("Jakarta");
         emptyGoingToTextField();
-        selectGoingToCity();
+        selectGoingToCity("Bali");
         clickDestinationTextField();
         emptyDestinationTextField();
-        selectDestinationCity();
+        selectDestinationCity("Bali");
         clickDepartTextField();
         selectDepartTime();
         clickCheckInTextField();
@@ -130,9 +130,9 @@ public class App10FlightAndHotelTest
 
         clickGoingFromTextField();
         emptyGoingFromTextField();
-        selectGoingFromCity();
+        selectGoingFromCity("Jakarta");
         emptyGoingToTextField();
-        selecFailtGoingToCity();
+        selectGoingToCity("Jakarta");
         searchFlightAndHotelButton();
         verifyFailedSearchFlightAndHotelSameDestination();
 
@@ -256,12 +256,12 @@ public class App10FlightAndHotelTest
     }
 
     @Step("Select Going From city")
-    private void selectGoingFromCity() {
+    private void selectGoingFromCity(String city) {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
-        WebElement city = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.m-flight-poi-wrapper.overflow-scroll.mt-4.fh-bundle-poi.is-hotcity > ul > li:nth-child(1) > ul > li:nth-child(1) > span")));
-        city.click();
+        WebElement goingToCity = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(/html/body/div[3]//*[contains(text(), '"+ city +"')])[1]")));
+        goingToCity.click();
     }
 
     @Step("Click Going To text field")
@@ -279,22 +279,22 @@ public class App10FlightAndHotelTest
     }
 
     @Step("Select Going To city")
-    private void selectGoingToCity() {
+    private void selectGoingToCity(String city) {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
-        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.m-flight-poi-wrapper.overflow-scroll.mt-4.fh-bundle-poi.is-hotcity > ul > li:nth-child(1) > ul > li:nth-child(2) > span")));
+        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(/html/body/div[3]//*[contains(text(), '"+ city +"')])[1]")));
         goingTo.click();
     }
 
-    @Step("Select Going To city (same as Going From)")
-    private void selecFailtGoingToCity() {
-        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+    // @Step("Select Going To city (same as Going From)")
+    // private void selecFailGoingToCity() {
+    //     WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
-        // Ensure the dropdown options are clickable
-        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.m-flight-poi-wrapper.overflow-scroll.mt-4.fh-bundle-poi.is-hotcity > ul > li:nth-child(1) > ul > li:nth-child(1) > span")));
-        goingTo.click();
-    }
+    //     // Ensure the dropdown options are clickable
+    //     WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.m-flight-poi-wrapper.overflow-scroll.mt-4.fh-bundle-poi.is-hotcity > ul > li:nth-child(1) > ul > li:nth-child(1) > span")));
+    //     goingTo.click();
+    // }
 
     @Step("Click Destination text field")
     private void clickDestinationTextField(){
@@ -311,12 +311,12 @@ public class App10FlightAndHotelTest
     }
 
     @Step("Select Destination city")
-    private void selectDestinationCity() {
+    private void selectDestinationCity(String destination) {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
-        WebElement destination = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.fhs-hotel-wrapper > div > div > div.group-content > div:nth-child(1)")));
-        destination.click();
+        WebElement destinationCity = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(/html/body/div[3]//*[contains(text(), '"+ destination +"')])[1]")));
+        destinationCity.click();
     }
 
     @Step("Click Depart text field")

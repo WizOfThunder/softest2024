@@ -57,9 +57,9 @@ public class App04FlightTest
         clickOneWay();
         clearLeavingFromTextField();
         clickLeavingFromTextField();
-        selectLeavingFrom();
+        selectLeavingFrom("Jakarta");
         goingToTextField();
-        selectGoingTo();
+        selectGoingTo("Bali");
         searchFlightButton();
         verifySuccessSearchFlight();
         takeScreenshot("TC011_testSuccessSearchFlight");
@@ -95,9 +95,9 @@ public class App04FlightTest
         clickOneWay();
         clearLeavingFromTextField();
         clickLeavingFromTextField();
-        selectLeavingFrom();
+        selectLeavingFrom("Jakarta");
         goingToTextField();
-        selectFailGoingTo();
+        selectGoingTo("Jakarta");
         searchFlightButton();
         verifyFailedSearchFlightSameDestination();
         takeScreenshot("TC013_testFailedSearchFlightSameDestination");
@@ -131,7 +131,7 @@ public class App04FlightTest
     @Step("Clear leaving from text field")
     private void clearLeavingFromTextField(){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement clearLeavingFromField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#main > div.new-index-container > div.top-wrapper > div.inner-wrapper > div.searchForm-wrapper > div > div > div > form > div > div:nth-child(2) > div.m-searchForm__wrapper.m-searchForm__single-wrapper.m-searchForm__new-version.m-searchForm__oneway-wrapper > div > div > ul > li.m-searchForm__item.segment-city.flex > div.segment-info-wrapper.flex > div:nth-child(1) > div > div > div > div > span > i")));
+        WebElement clearLeavingFromField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#main > div.new-index-container > div.top-wrapper > div.inner-wrapper > div.searchForm-wrapper > div > div > div > form > div > div:nth-child(2) > div.m-searchForm__wrapper.m-searchForm__single-wrapper.m-searchForm__new-version > div > div > ul > li.m-searchForm__item.segment-city.flex > div.segment-info-wrapper.flex > div:nth-child(1) > div > div > div > div > span > i")));
         clearLeavingFromField.click();
     }
 
@@ -143,11 +143,11 @@ public class App04FlightTest
     }
 
     @Step("Click Leaving From choice")
-    private void selectLeavingFrom() {
+    private void selectLeavingFrom(String city) {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
-        WebElement leavingFrom = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.m-flight-poi-wrapper.mt-4.nh_poi-container > div.nh_poi-hotcities > div.nh_poi-popular-container > div:nth-child(1) > div.nh_poi-city-items > div:nth-child(1) > div")));
+        WebElement leavingFrom = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(/html/body/div[4]//*[contains(text(), '" + city + "')])[1]")));
         leavingFrom.click();
     }
 
@@ -159,22 +159,22 @@ public class App04FlightTest
     }
 
     @Step("Click Going To choice")
-    private void selectGoingTo() {
+    private void selectGoingTo(String city) {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
-        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.m-flight-poi-wrapper.mt-4.nh_poi-container > div.nh_poi-hotcities > div.nh_poi-popular-container > div:nth-child(1) > div.nh_poi-city-items > div:nth-child(2) > div > div")));
+        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(/html/body/div[4]//*[contains(text(), '" + city + "')])[1]")));
         goingTo.click();
     }
 
-    @Step("Click the same destination for Going To")
-    private void selectFailGoingTo() {
-        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+    // @Step("Click the same destination for Going To")
+    // private void selectFailGoingTo() {
+    //     WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
-        // Ensure the dropdown options are clickable
-        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.m-flight-poi-wrapper.mt-4.nh_poi-container > div.nh_poi-hotcities > div.nh_poi-popular-container > div:nth-child(1) > div.nh_poi-city-items > div:nth-child(1) > div > div > div > span")));
-        goingTo.click();
-    }
+    //     // Ensure the dropdown options are clickable
+    //     WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.m-flight-poi-wrapper.mt-4.nh_poi-container > div.nh_poi-hotcities > div.nh_poi-popular-container > div:nth-child(1) > div.nh_poi-city-items > div:nth-child(1) > div > div > div > span")));
+    //     goingTo.click();
+    // }
 
     // @Step("Click search bar")
     // private void search(){

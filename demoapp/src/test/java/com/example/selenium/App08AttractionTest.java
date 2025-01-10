@@ -56,7 +56,7 @@ public class App08AttractionTest
 
         navigateToAttractionPage();
         clickCityTextField();
-        selectCity();
+        selectCity("Hong Kong");
         searchAttractionButton();
         verifySuccessSearchAttractionByCity();
         takeScreenshot("TC040_testSuccessSearchAttractionByCity");
@@ -73,9 +73,9 @@ public class App08AttractionTest
         attachTimestamp("Test Start Time", startTime);
 
         clickCityTextField();
-        selectCity();
+        selectCity("Hong Kong");
         clickAttractionTextField();
-        selectAttraction();
+        selectAttraction("Hong Kong Disneyland");
         verifySuccessSearchAttractionByAttractionName();
         takeScreenshot("TC041_testSuccessSearchAttractionByAttractionName");
         //resetAttractionPage();
@@ -113,12 +113,12 @@ public class App08AttractionTest
     }
 
     @Step("Click City From choice")
-    private void selectCity() {
+    private void selectCity(String city) {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
-        WebElement city = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#ibuact-10650012750-destarea-dest-undefined-4-38")));
-        city.click();
+        WebElement select = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[contains(text(), '" + city + "')])[1]")));
+        select.click();
     }
 
     @Step("Click Attraction text field")
@@ -129,11 +129,11 @@ public class App08AttractionTest
     }
 
     @Step("Click Attraction From choice")
-    private void selectAttraction() {
+    private void selectAttraction(String attraction) {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
-        WebElement Attraction = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#ticket_header_pic > div.ticket_header_search > div.trip-search > div > div > div.ol_citypage_layer > div > div > div > article > div > div > div > div > div:nth-child(1) > div > div.popover_card_content > div:nth-child(1) > div.popover_card_content_row_carditem_box.flexone > div > div > span")));
+        WebElement Attraction = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[contains(text(), '" + attraction + "')])[1]")));
         Attraction.click();
     }
 

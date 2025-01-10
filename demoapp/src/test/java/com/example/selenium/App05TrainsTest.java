@@ -56,8 +56,8 @@ public class App05TrainsTest
 
         navigateToTrainsPage();
         clickLeavingFromTextField();
-        selectLeavingFrom();
-        selectGoingTo();
+        selectLeavingFrom("Shanghai");
+        selectGoingTo("Shenzhen");
         clickDepatureTime();
         clickHighSpeedCheckbox();
         searchTrainsButton();
@@ -98,8 +98,8 @@ public class App05TrainsTest
         attachTimestamp("Test Start Time", startTime);
 
         clickLeavingFromTextField();
-        selectLeavingFrom();
-        selectFailGoingTo();
+        selectLeavingFrom("Shanghai");
+        selectGoingTo("Shanghai");
         clickHighSpeedCheckbox();
         searchTrainsButton();
         verifyFailedSearchTrainsSameDestination();
@@ -152,11 +152,11 @@ public class App05TrainsTest
     }
 
     @Step("Click Leaving From choice")
-    private void selectLeavingFrom() {
+    private void selectLeavingFrom(String city) {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
-        WebElement leavingFrom = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div.CityPicker_container___pdTr.CityPicker_divider__nc3eJ > div.open-component.trip-seo-search-box-open-component.online > div > div > div > div > ul:nth-child(2) > li:nth-child(1) > span")));
+        WebElement leavingFrom = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(/html/body/div[1]/div/div[1]/div/div/div[2]/div[2]/div[1]/div/div[1]/div[1]/div[1]/div[2]/div/div/div//*[contains(text(), '" + city + "')])[1]")));
         leavingFrom.click();
     }
 
@@ -175,22 +175,22 @@ public class App05TrainsTest
     }
 
     @Step("Click Going To choice")
-    private void selectGoingTo() {
+    private void selectGoingTo(String city) {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
-        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div:nth-child(3) > div.open-component.trip-seo-search-box-open-component.online > div > div > div > div > ul:nth-child(4) > li:nth-child(2) > span")));
+        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(/html/body/div[1]/div/div[1]/div/div/div[2]/div[2]/div[1]/div/div[1]/div[1]/div[3]/div[2]/div/div/div//*[contains(text(), '" + city + "')])[1]")));
         goingTo.click();
     }
 
-    @Step("Click Same Destination for Going To")
-    private void selectFailGoingTo() {
-        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+    // @Step("Click Same Destination for Going To")
+    // private void selectFailGoingTo() {
+    //     WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
-        // Ensure the dropdown options are clickable
-        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div:nth-child(3) > div.open-component.trip-seo-search-box-open-component.online > div > div > div > div > ul:nth-child(2) > li > span")));
-        goingTo.click();
-    }
+    //     // Ensure the dropdown options are clickable
+    //     WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div:nth-child(3) > div.open-component.trip-seo-search-box-open-component.online > div > div > div > div > ul:nth-child(2) > li > span")));
+    //     goingTo.click();
+    // }
 
     @Step("Select Departure Time")
     private void clickDepatureTime(){
