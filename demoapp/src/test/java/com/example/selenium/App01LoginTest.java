@@ -162,7 +162,8 @@ public class App01LoginTest
 
     @Step("Input form with Email:{email}")
     private void emailFill(String email){
-        WebElement emailField=app.getDriver().findElement(By.cssSelector("#ibu_login_online > div.clearfix > div > div.content_wrapper.textAlignLeft > form > div > div.input_wrapper > div > div > input"));
+        WebElement emailField = app.getDriver().findElement(By.cssSelector(
+                "#ibu_login_online > div.clearfix > div > div.content_wrapper.textAlignLeft > form > div > div.input_wrapper > div > div > input"));
         emailField.clear();
         emailField.sendKeys(email);
 
