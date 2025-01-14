@@ -300,4 +300,10 @@ public class App07CarTransferTest {
             return new byte[0];
         }
     }
+
+    @AfterClass
+    @Description("Close Browser")
+    public void tearDown(){
+        app.closBrowser();
+    }
 }
