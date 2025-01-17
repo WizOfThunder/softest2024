@@ -49,8 +49,8 @@ public class App08AttractionTest
     }
 
     @Test
-    @Feature("TC040 Search Attractions & Tours By City")
-    public void TC040_testSuccessSearchAttractionByCity(){
+    @Feature("TC041 Search Attractions & Tours By City")
+    public void TC041_testSuccessSearchAttractionByCity(){
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
@@ -59,7 +59,7 @@ public class App08AttractionTest
         selectCity("Hong Kong");
         searchAttractionButton();
         verifySuccessSearchAttractionByCity();
-        takeScreenshot("TC040_testSuccessSearchAttractionByCity");
+        takeScreenshot("TC041_testSuccessSearchAttractionByCity");
         resetAttractionPage();
 
         String endTime = getCurrentTimestamp();
@@ -67,8 +67,8 @@ public class App08AttractionTest
     }
 
     @Test
-    @Feature("TC041 Success Search Attractions & Tours By Attraction Name")
-    public void TC041_testSuccessSearchAttractionByAttractionName(){
+    @Feature("TC042 Success Search Attractions & Tours By Attraction Name")
+    public void TC042_testSuccessSearchAttractionByAttractionName(){
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
@@ -77,7 +77,7 @@ public class App08AttractionTest
         clickAttractionTextField();
         selectAttraction("Hong Kong Disneyland");
         verifySuccessSearchAttractionByAttractionName();
-        takeScreenshot("TC041_testSuccessSearchAttractionByAttractionName");
+        takeScreenshot("TC042_testSuccessSearchAttractionByAttractionName");
         //resetAttractionPage();
 
         String endTime = getCurrentTimestamp();

@@ -45,8 +45,8 @@ public class App07CarTransferTest {
     }
 
     @Test
-    @Feature("TC033 Success Search Car Transfer (Pick Up)")
-    public void TC033_testSuccessSearchCarTransferPickUp() {
+    @Feature("TC034 Success Search Car Transfer (Pick Up)")
+    public void TC034_testSuccessSearchCarTransferPickUp() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
@@ -63,7 +63,7 @@ public class App07CarTransferTest {
         selectDestination();
         searchCarTransferButton();
         verifySuccessSearchCarTransferPickUp();
-        takeScreenshot("TC033_testSuccessSearchCarTransferPickUp");
+        takeScreenshot("TC034_testSuccessSearchCarTransferPickUp");
         resetCarTransferPage();
 
         String endTime = getCurrentTimestamp();
@@ -71,14 +71,14 @@ public class App07CarTransferTest {
     }
 
     @Test
-    @Feature("TC035 Fail Search Car Transfer (Empty Field)")
-    public void TC035_testFailSearchCarTransfer() {
+    @Feature("TC036 Fail Search Car Transfer (Empty Field)")
+    public void TC036_testFailSearchCarTransfer() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
         searchCarTransferButton();
         verifyFailSearchCarTransfer();
-        takeScreenshot("TC035_testFailSearchCarTransfer");
+        takeScreenshot("TC036_testFailSearchCarTransfer");
 
         String endTime = getCurrentTimestamp();
         attachTimestamp("Test End Time", endTime);

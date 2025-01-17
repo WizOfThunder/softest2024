@@ -55,6 +55,7 @@ public class App04FlightTest
 
         navigateToFlightPage();
         clickOneWay();
+        clearGoingTo();
         clearLeavingFromTextField();
         clickLeavingFromTextField();
         selectLeavingFrom("Jakarta");
@@ -154,7 +155,7 @@ public class App04FlightTest
     @Step("Click going to text field")
     private void goingToTextField(){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement goingToField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#main > div.new-index-container > div.top-wrapper > div.inner-wrapper > div.searchForm-wrapper > div > div > div > form > div > div:nth-child(2) > div.m-searchForm__wrapper.m-searchForm__single-wrapper.m-searchForm__new-version.m-searchForm__oneway-wrapper > div > div > ul > li.m-searchForm__item.segment-city.flex > div.segment-info-wrapper.flex > div:nth-child(3) > div > div > div > div")));
+        WebElement goingToField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@data-testid='search_city_to0_wrapper']")));
         goingToField.click();
     }
 
@@ -167,14 +168,14 @@ public class App04FlightTest
         goingTo.click();
     }
 
-    // @Step("Click the same destination for Going To")
-    // private void selectFailGoingTo() {
-    //     WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+    @Step("Clear Going To Text Field")
+    private void clearGoingTo() {
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
-    //     // Ensure the dropdown options are clickable
-    //     WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.m-flight-poi-wrapper.mt-4.nh_poi-container > div.nh_poi-hotcities > div.nh_poi-popular-container > div:nth-child(1) > div.nh_poi-city-items > div:nth-child(1) > div > div > div > span")));
-    //     goingTo.click();
-    // }
+        // Ensure the dropdown options are clickable
+        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@data-testid=\"cityLabel_delete_0\"])[2]")));
+        goingTo.click();
+    }
 
     // @Step("Click search bar")
     // private void search(){

@@ -49,8 +49,8 @@ public class App10FlightAndHotelTest
     }
 
     @Test
-    @Feature("TC052 Search Flight & Hotel (Round-Trip)")
-    public void TC052_testSuccessSearchFlightAndHotelRoundTrip(){
+    @Feature("TC053 Search Flight & Hotel (Round-Trip)")
+    public void TC053_testSuccessSearchFlightAndHotelRoundTrip(){
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
@@ -74,7 +74,7 @@ public class App10FlightAndHotelTest
         searchFlightAndHotelButton();
         verifySuccessSearchFlightAndHotelRoundTrip();
 
-        takeScreenshot("TC052_testSuccessSearchFlightAndHotelRoundTrip");
+        takeScreenshot("TC053_testSuccessSearchFlightAndHotelRoundTrip");
         resetFlightAndHotelPage();
 
         String endTime = getCurrentTimestamp();
@@ -82,8 +82,8 @@ public class App10FlightAndHotelTest
     }
 
     @Test
-    @Feature("TC053 Search Flight & Hotel (One-Way)")
-    public void TC053_testSuccessSearchFlightAndHotelOneWay(){
+    @Feature("TC054 Search Flight & Hotel (One-Way)")
+    public void TC054_testSuccessSearchFlightAndHotelOneWay(){
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
@@ -115,7 +115,7 @@ public class App10FlightAndHotelTest
         searchFlightAndHotelButton();
         verifySuccessSearchFlightAndHotelOneWay();
 
-        takeScreenshot("TC053_testSuccessSearchFlightAndHotelOneWay");
+        takeScreenshot("TC054_testSuccessSearchFlightAndHotelOneWay");
         resetFlightAndHotelPage();
 
         String endTime = getCurrentTimestamp();
@@ -123,8 +123,8 @@ public class App10FlightAndHotelTest
     }
 
     @Test
-    @Feature("TC054 Failed Search Flight & Hotel (Same Destination)")
-    public void TC054_testFailedSearchFlightAndHotelSameDestination(){
+    @Feature("TC055 Failed Search Flight & Hotel (Same Destination)")
+    public void TC055_testFailedSearchFlightAndHotelSameDestination(){
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
@@ -136,8 +136,28 @@ public class App10FlightAndHotelTest
         searchFlightAndHotelButton();
         verifyFailedSearchFlightAndHotelSameDestination();
 
-        takeScreenshot("TC054_testFailedSearchFlightAndHotelSameDestination");
+        takeScreenshot("TC055_testFailedSearchFlightAndHotelSameDestination");
 
+        resetFlightAndHotelPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
+    @Feature("TC056 Navigation Flight Status")
+    public void TC056_testNavigationFlightStatus(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
+        clickFlightStatus();
+        inputFlightNumber("DL1234");
+        clickDepartFlightTextField();
+        chooseDepartDate(18, 2);
+        clickSearchButton();
+        verifySuccessFlightStatusNavigation();
+        takeScreenshot("TC056_testNavigationFlightStatus");
+        
         String endTime = getCurrentTimestamp();
         attachTimestamp("Test End Time", endTime);
     }
@@ -322,7 +342,14 @@ public class App10FlightAndHotelTest
     @Step("Click Depart text field")
     private void clickDepartTextField(){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement departTextField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#depart")));
+        WebElement departTextField = wait.until(ExpectedConditions.elementToBeClickable(By.id("depart")));
+        departTextField.click();
+    }
+
+    @Step("Click Depart Flight text field")
+    private void clickDepartFlightTextField(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement departTextField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#searchTimeLabel > div > input")));
         departTextField.click();
     }
 
@@ -340,7 +367,7 @@ public class App10FlightAndHotelTest
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
-        WebElement depart = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.c-calendar.fh-bundle-package-calendar > div.c-calendar__body > div:nth-child(2) > div.c-calendar-month__days > ul:nth-child(3) > li:nth-child(6)")));
+        WebElement depart = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.c-calendar.fh-bundle-package-calendar > div.c-calendar__body > div:nth-child(2) > div.c-calendar-month__days > ul:nth-child(3) > li.is-selected.is-selected-last.is-allow-hover > span")));
         depart.click();
     }
 
@@ -425,6 +452,56 @@ public class App10FlightAndHotelTest
     //     emailField.sendKeys(input);
     // }
 
+    @Step("Click Flight Status Option")
+    private void clickFlightStatus(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement status = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='__next']/div[2]/span/div[3]")));
+        status.click();
+    }
+
+    @Step("Click Search By Departure/ Arrival City Option")
+    private void clickSearchByDepartureArrivalCity(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"search\"]/div[1]/div[1]/div[2]/div")));
+        option.click();
+    }
+
+    @Step("Choose day in depart text field")
+    private void chooseDepartDate(int day, int month){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement depart = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='search']/div[2]/div[2]/div/div[1]/div["+month+"]//*[contains(text(),'"+day+"')][1]")));
+       depart.click();
+    }
+
+    @Step("Click Flight Number Text Field")
+    private void clickFlightNumberTextField(){
+        driver = app.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+        WebElement flight = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#search > div.search-info-container > div.search-selectors-info.search-selectors-info--ibu.search-selectors-info--fno > label > div.search-selectors-fno > input")));
+        flight.click();
+    }
+
+    @Step("Input Flight Number")
+    private void inputFlightNumber(String flight_number){
+        driver = app.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+        WebElement flight = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#search > div.search-info-container > div.search-selectors-info.search-selectors-info--ibu.search-selectors-info--fno > label > div.search-selectors-fno > input")));
+        flight.sendKeys(flight_number);
+    }
+
+    @Step("Click Search Button")
+    private void clickSearchButton(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#search > div.search-info-container > div.search-button.search-button-left.search-button--ibu > div.search-button-text")));
+        button.click();
+    }
+
     @Step("Verify success search Flight & Hotels (Round-Trip)")
     private void verifySuccessSearchFlightAndHotelRoundTrip() {
         driver = app.getDriver();
@@ -489,6 +566,20 @@ public class App10FlightAndHotelTest
         
         // Assert the element is displayed
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
+    @Step("Verify success Flight Status Navigation")
+    private void verifySuccessFlightStatusNavigation() {
+        driver = app.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(100));
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+        By successElementSelector = By.xpath(
+                "//*[@id='__next']/div[4]/div[1]/div[1]/div[1]/div[1]");
+        
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+        Assert.assertTrue(successElement.getText().contains("Delta Air Lines DL1234"), "Success element not displayed!");
     }
 
     @Step("Reset Flight & Hotel Page")

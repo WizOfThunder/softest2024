@@ -21,6 +21,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By.ByXPath;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
@@ -58,7 +59,7 @@ public class App05TrainsTest
         clickLeavingFromTextField();
         selectLeavingFrom("Shanghai");
         selectGoingTo("Shenzhen");
-        clickDepatureTime();
+        clickDepatureTime(13, 2);
         clickHighSpeedCheckbox();
         searchTrainsButton();
         verifySuccessSearchTrains();
@@ -104,7 +105,24 @@ public class App05TrainsTest
         searchTrainsButton();
         verifyFailedSearchTrainsSameDestination();
         takeScreenshot("TC020_testFailedSearchTrainsSameDestination");
+        
+        resetTrainsPage();
 
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
+    @Feature("TC021 Navigation Train Guides")
+    public void TC021_testNavigationTrainGuides(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
+        clickTrainGuides();
+        verifySuccessTrainGuidesNavigation();
+        takeScreenshot("TC021_testNavigationTrainGuides");
+        //resetPage();
+        
         String endTime = getCurrentTimestamp();
         attachTimestamp("Test End Time", endTime);
     }
@@ -119,14 +137,14 @@ public class App05TrainsTest
     @Step("Click checkbox high speed option")
     private void clickHighSpeedCheckbox(){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement highSpeedCheckbox = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.HighSpeedCheckbox_container__Ru9AV.high-speed > i")));
+        WebElement highSpeedCheckbox = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class='trn-ift HighSpeedCheckbox_checkbox__RYD1_']")));
         highSpeedCheckbox.click();
     }
     
     @Step("Click button search trains")
     private void searchTrainsButton(){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.SearchBtn_container__vR1Vw.search-btn.touchhl-prima")));
+        WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div[1]/div/div/div[2]/div[2]/div[2]/div/div//*[contains(text(),'Search')]")));
         searchButton.click();
     }
     
@@ -140,14 +158,14 @@ public class App05TrainsTest
     @Step("Click leaving from text field")
     private void clickLeavingFromTextField(){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement leavingFromField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div.CityPicker_container___pdTr.CityPicker_divider__nc3eJ > div > span > input")));
+        WebElement leavingFromField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@class='CityPicker_input__2Cqbv'])[1]")));
         leavingFromField.click();
     }
 
     @Step("Empty Leaving From text field")
     private void emptyLeavingFromTextField(){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement leavingFromField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div.CityPicker_container___pdTr.CityPicker_divider__nc3eJ > div.open-component.trip-seo-search-box-open-component.online > div > div > input")));
+        WebElement leavingFromField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(8) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.search-box-with-season > div > div > div.grid-box > div.station > div.CityPicker_container___pdTr.CityPicker_divider__nc3eJ > div.open-component.trip-seo-search-box-open-component.online > div > div > input")));
         leavingFromField.sendKeys(Keys.BACK_SPACE);
     }
 
@@ -156,21 +174,21 @@ public class App05TrainsTest
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
-        WebElement leavingFrom = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(/html/body/div[1]/div/div[1]/div/div/div[2]/div[2]/div[1]/div/div[1]/div[1]/div[1]/div[2]/div/div/div//*[contains(text(), '" + city + "')])[1]")));
+        WebElement leavingFrom = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(/html/body/div[1]/div/div[1]/div/div/div[2]/div[2]/div[2]/div/div/div[1]/div[1]/div[1]/div[2]/div/div/div//*[contains(text(), '" + city + "')])[1]")));
         leavingFrom.click();
     }
 
     @Step("Click going to text field")
     private void clickGoingToTextField(){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement goingToField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div:nth-child(3) > div > span > input")));
+        WebElement goingToField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(8) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.search-box-with-season > div > div > div.grid-box > div.station > div:nth-child(3) > div.CityPicker_inputContainer__upDg7 > span > input")));
         goingToField.click();
     }
 
     @Step("Empty going to text field")
     private void emptyGoingToTextField(){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement goingToField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div:nth-child(3) > div.open-component.trip-seo-search-box-open-component.online > div > div > input")));
+        WebElement goingToField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(8) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.search-box-with-season > div > div > div.grid-box > div.station > div:nth-child(3) > div.open-component.trip-seo-search-box-open-component.online > div > div > input")));
         goingToField.sendKeys(Keys.BACK_SPACE);
     }
 
@@ -179,7 +197,7 @@ public class App05TrainsTest
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     
         // Ensure the dropdown options are clickable
-        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(/html/body/div[1]/div/div[1]/div/div/div[2]/div[2]/div[1]/div/div[1]/div[1]/div[3]/div[2]/div/div/div//*[contains(text(), '" + city + "')])[1]")));
+        WebElement goingTo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(/html/body/div[1]/div/div[1]/div/div/div[2]/div[2]/div[2]/div/div/div[1]/div[1]/div[3]/div[2]/div/div/div//*[contains(text(), '" + city + "')])[1]")));
         goingTo.click();
     }
 
@@ -193,9 +211,9 @@ public class App05TrainsTest
     // }
 
     @Step("Select Departure Time")
-    private void clickDepatureTime(){
+    private void clickDepatureTime(int day, int month){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement departure = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.open-component.trip-seo-search-box-open-component.online > div > div > div.c-calendar__body > div:nth-child(2) > div.c-calendar-month__days > ul:nth-child(3) > li:nth-child(4) > div > span.day")));
+        WebElement departure = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div[1]/div/div/div[2]/div[2]/div[2]/div/div/div[4]/div/div/div[1]/div["+month+"]//*[contains(text(),'"+day+"')]")));
         departure.click();
     }
     
@@ -204,6 +222,13 @@ public class App05TrainsTest
     //     WebElement emailField=app.getDriver().findElement(By.cssSelector("#ibuHeaderSearch > div > div > div > div.gccpoi__TripSearchBox-content > input"));
     //     emailField.sendKeys(input);
     // }
+
+    @Step("Click Train Guides Option")
+    private void clickTrainGuides(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement guides = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div[1]/div/div/div[2]/div[3]/div[2]/span")));
+        guides.click();
+    }
 
     @Step("Verify success search trains")
     private void verifySuccessSearchTrains() {
@@ -238,7 +263,7 @@ public class App05TrainsTest
             driver.switchTo().window(handle);
         }
 
-        By successElementSelector = By.cssSelector("body > div:nth-child(6) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.trip-seo-search-box.online > div > div.grid-box > div.station > div.CityPicker_container___pdTr.CityPicker_divider__nc3eJ > div.CityPicker_msg__N8KHY.CityPicker_warning__ryIVF > span");
+        By successElementSelector = By.cssSelector("body > div:nth-child(8) > div > div.search_top-card__49bt4.with-menu > div > div > div.full-cont.search_top-view__e6uw4 > div.search_search-bar-wp__FgD72 > div.search-box-with-season > div > div > div.grid-box > div.station > div:nth-child(3) > div.CityPicker_msg__N8KHY.CityPicker_warning__ryIVF > span");
 
         // Wait for the element to be visible
         WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
@@ -265,6 +290,20 @@ public class App05TrainsTest
     
         // Assert the element is displayed
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
+    @Step("Verify success Train Guides Navigation")
+    private void verifySuccessTrainGuidesNavigation() {
+        driver = app.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(100));
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+        By successElementSelector = By.xpath(
+                "//*[@id=\"__next\"]/div[1]/div[1]/div[2]/div[2]/h1");
+        
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+        Assert.assertTrue(successElement.getText().contains("Train Ticket and Travel FAQs"), "Success element not displayed!");
     }
 
     @Step("Reset Trains Page")

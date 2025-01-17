@@ -64,14 +64,14 @@ public class App11NavigationTest
     }
 
     @Test
-    @Feature("TC059 Link Navigation")
-    public void TC059_testLinkNavigation(){
+    @Feature("TC061 Link Navigation")
+    public void TC061_testLinkNavigation(){
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
         clickFooterLink("Customer Support");
         verifySuccessLinkNavigation();
-        takeScreenshot("TC059_testLinkNavigation");
+        takeScreenshot("TC061_testLinkNavigation");
         //resetPage();
         
         String endTime = getCurrentTimestamp();
@@ -79,14 +79,14 @@ public class App11NavigationTest
     }
 
     @Test
-    @Feature("TC060 Promo Navigation")
-    public void TC060_testPromoNavigation(){
+    @Feature("TC062 Promo Navigation")
+    public void TC062_testPromoNavigation(){
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
         clickPromo(1);
         verifySuccessPromoNavigation();
-        takeScreenshot("TC060_testPromoNavigation");
+        takeScreenshot("TC062_testPromoNavigation");
         //resetPage();
         
         String endTime = getCurrentTimestamp();
@@ -94,14 +94,14 @@ public class App11NavigationTest
     }
 
     @Test
-    @Feature("TC061 Header Navigation Map")
-    public void TC061_testHeaderNavigationMap(){
+    @Feature("TC063 Header Navigation Map")
+    public void TC063_testHeaderNavigationMap(){
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
         clickMapHeader();
         verifySuccessMapHeaderNavigation();
-        takeScreenshot("TC061_testHeaderNavigationMap");
+        takeScreenshot("TC063_testHeaderNavigationMap");
         //resetPage();
         
         String endTime = getCurrentTimestamp();
@@ -109,14 +109,14 @@ public class App11NavigationTest
     }
 
     @Test
-    @Feature("TC062 Header Navigation Trip.com Rewards")
-    public void TC062_testHeaderNavigationTripRewards(){
+    @Feature("TC064 Header Navigation Trip.com Rewards")
+    public void TC064_testHeaderNavigationTripRewards(){
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
         clickTripRewardsHeader();
         verifySuccessTripRewardsHeaderNavigation();
-        takeScreenshot("TC062_testHeaderNavigationTripRewards");
+        takeScreenshot("TC064_testHeaderNavigationTripRewards");
         //resetPage();
         
         String endTime = getCurrentTimestamp();
@@ -124,52 +124,16 @@ public class App11NavigationTest
     }
 
     @Test
-    @Feature("TC063 Header Navigation Deals")
-    public void TC063_testHeaderNavigationDeals(){
+    @Feature("TC065 Header Navigation Deals")
+    public void TC065_testHeaderNavigationDeals(){
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
         closeBlockingElement();
         clickDealsHeader();
         verifySuccessDealsHeaderNavigation();
-        takeScreenshot("TC063_testHeaderNavigationDeals");
+        takeScreenshot("TC065_testHeaderNavigationDeals");
         //resetPage();
-        
-        String endTime = getCurrentTimestamp();
-        attachTimestamp("Test End Time", endTime);
-    }
-
-    @Test
-    @Feature("TC064 Navigation Train Guides")
-    public void TC064_testNavigationTrainGuides(){
-        String startTime = getCurrentTimestamp();
-        attachTimestamp("Test Start Time", startTime);
-
-        navigateToTrainsPage();
-        clickTrainGuides();
-        verifySuccessTrainGuidesNavigation();
-        takeScreenshot("TC064_testNavigationTrainGuides");
-        //resetPage();
-        
-        String endTime = getCurrentTimestamp();
-        attachTimestamp("Test End Time", endTime);
-    }
-
-    @Test
-    @Feature("TC065 Navigation Flight Status")
-    public void TC065_testNavigationFlightStatus(){
-        String startTime = getCurrentTimestamp();
-        attachTimestamp("Test Start Time", startTime);
-
-        navigateToFlightAndHotelPage();
-        clickFlightStatus();
-        //clickFlightNumberTextField();
-        inputFlightNumber("DL1234");
-        clickDepartTextField();
-        chooseDepartDate(18, 2);
-        clickSearchButton();
-        verifySuccessFlightStatusNavigation();
-        takeScreenshot("TC065_testNavigationFlightStatus");
         
         String endTime = getCurrentTimestamp();
         attachTimestamp("Test End Time", endTime);
@@ -221,84 +185,6 @@ public class App11NavigationTest
                 JavascriptExecutor js = (JavascriptExecutor) driver;
                 js.executeScript("arguments[0].style.display='none';", blockingElement);
             }
-    }
-
-    @Step("Navigate to trains page")
-    private void navigateToTrainsPage(){
-        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement trainsPage = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#header_action_nav_trains")));
-        trainsPage.click();
-    }
-
-    @Step("Click Train Guides Option")
-    private void clickTrainGuides(){
-        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement guides = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div[1]/div/div/div[2]/div[3]/div[2]/span")));
-        guides.click();
-    }
-
-    @Step("Navigate to Flight & Hotel page")
-    private void navigateToFlightAndHotelPage(){
-        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement flightAndHotelPage = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#header_action_nav_packages")));
-        flightAndHotelPage.click();
-    }
-
-    @Step("Click Flight Status Option")
-    private void clickFlightStatus(){
-        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement status = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='__next']/div[2]/span/div[3]")));
-        status.click();
-    }
-
-    @Step("Click Search By Departure/ Arrival City Option")
-    private void clickSearchByDepartureArrivalCity(){
-        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"search\"]/div[1]/div[1]/div[2]/div")));
-        option.click();
-    }
-
-    @Step("Click Depart Text Field")
-    private void clickDepartTextField(){
-        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement depart = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='searchTimeLabel']/div/input")));
-       depart.click();
-    }
-
-    @Step("Choose day in depart text field")
-    private void chooseDepartDate(int day, int month){
-        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement depart = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='search']/div[2]/div[2]/div/div[1]/div["+month+"]//*[contains(text(),'"+day+"')][1]")));
-       depart.click();
-    }
-
-    @Step("Click Flight Number Text Field")
-    private void clickFlightNumberTextField(){
-        driver = app.getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
-        for (String handle : driver.getWindowHandles()) {
-            driver.switchTo().window(handle);
-        }
-        WebElement flight = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#search > div.search-info-container > div.search-selectors-info.search-selectors-info--ibu.search-selectors-info--fno > label > div.search-selectors-fno > input")));
-        flight.click();
-    }
-
-    @Step("Input Flight Number")
-    private void inputFlightNumber(String flight_number){
-        driver = app.getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
-        for (String handle : driver.getWindowHandles()) {
-            driver.switchTo().window(handle);
-        }
-        WebElement flight = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#search > div.search-info-container > div.search-selectors-info.search-selectors-info--ibu.search-selectors-info--fno > label > div.search-selectors-fno > input")));
-        flight.sendKeys(flight_number);
-    }
-
-    @Step("Click Search Button")
-    private void clickSearchButton(){
-        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#search > div.search-info-container > div.search-button.search-button-left.search-button--ibu > div.search-button-text")));
-        button.click();
     }
 
     @Step("Click From Text Field")
@@ -376,34 +262,6 @@ public class App11NavigationTest
         
         WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
-    }
-
-    @Step("Verify success Train Guides Navigation")
-    private void verifySuccessTrainGuidesNavigation() {
-        driver = app.getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(100));
-        for (String handle : driver.getWindowHandles()) {
-            driver.switchTo().window(handle);
-        }
-        By successElementSelector = By.xpath(
-                "//*[@id=\"__next\"]/div[1]/div[1]/div[2]/div[2]/h1");
-        
-        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
-        Assert.assertTrue(successElement.getText().contains("Train Ticket and Travel FAQs"), "Success element not displayed!");
-    }
-
-    @Step("Verify success Flight Status Navigation")
-    private void verifySuccessFlightStatusNavigation() {
-        driver = app.getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(100));
-        for (String handle : driver.getWindowHandles()) {
-            driver.switchTo().window(handle);
-        }
-        By successElementSelector = By.xpath(
-                "//*[@id='__next']/div[4]/div[1]/div[1]/div[1]/div[1]");
-        
-        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
-        Assert.assertTrue(successElement.getText().contains("Delta Air Lines DL1234"), "Success element not displayed!");
     }
 
     // @Step("Reset Main Page")

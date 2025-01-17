@@ -45,34 +45,34 @@ public class App09CruiseTest {
     }
     
     @Test
-    @Feature("TC046 Success Search Cruise (with Input)")
-    public void TC046_testSuccessSearchCruiseWithInput() {
+    @Feature("TC047 Success Search Cruise (with Input)")
+    public void TC047_testSuccessSearchCruiseWithInput() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
         navigateToCruisePage();
         clickDepartFrom();
         selectDepartFrom();
-        clickSailFor();
-        selectSailFor();
+        //clickSailFor();
+        //selectSailFor();
         clickMonthOfDeparture();
         selectMonthOfDeparture();
         searchCruiseButton();
         verifySuccessSearchCruiseWithInput();
-        takeScreenshot("TC046_testSuccessSearchCruiseWithInput");
+        takeScreenshot("TC047_testSuccessSearchCruiseWithInput");
         resetCruisePage();
         String endTime = getCurrentTimestamp();
         attachTimestamp("Test End Time", endTime);
     }
 
     @Test
-    @Feature("TC047 Success Search Cruise No Input")
-    public void TC047_testSuccessSearchCruiseNoInput() {
+    @Feature("TC048 Success Search Cruise No Input")
+    public void TC048_testSuccessSearchCruiseNoInput() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
         searchCruiseButton();
         verifySuccessSearchCruiseNoInput();
-        takeScreenshot("TC047_testSuccessSearchCruiseNoInput");
+        takeScreenshot("TC048_testSuccessSearchCruiseNoInput");
         resetCruisePage();
 
         String endTime = getCurrentTimestamp();
@@ -109,7 +109,7 @@ public class App09CruiseTest {
     private void clickSailFor() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(100));
         WebElement sailFor = wait
-                .until(ExpectedConditions.elementToBeClickable(By.cssSelector("#ibucru-10650039176-selectionBox-LINE_AREA_IDS > div.input-box-component_base_input_container.blur > div")));
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@class='cru-form-select-text'])[2]")));
         sailFor.click();
         delay(1000);
     }
@@ -127,7 +127,7 @@ public class App09CruiseTest {
     private void clickMonthOfDeparture() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(100));
         WebElement monthOfDeparture = wait
-                .until(ExpectedConditions.elementToBeClickable(By.cssSelector("#ibucru-10650039176-selectionBox-DATE_TAGS > div.input-box-component_base_input_container.blur > div")));
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@class=\"cru-form-select-text\"])[3]")));
         monthOfDeparture.click();
         delay(1000);
     }

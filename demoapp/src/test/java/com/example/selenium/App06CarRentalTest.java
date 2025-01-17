@@ -45,8 +45,8 @@ public class App06CarRentalTest {
     }
 
     @Test
-    @Feature("TC025 Success Search Car Rental")
-    public void TC025_testSuccessSearchCarRental() {
+    @Feature("TC026 Success Search Car Rental")
+    public void TC026_testSuccessSearchCarRental() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
@@ -68,7 +68,7 @@ public class App06CarRentalTest {
         selectAge();
         searchCarRentalButton();
         verifySuccessSearchCarRental();
-        takeScreenshot("TC025_testSuccessSearchCarRental");
+        takeScreenshot("TC026_testSuccessSearchCarRental");
         resetCarRentalPage();
 
         String endTime = getCurrentTimestamp();
@@ -76,8 +76,8 @@ public class App06CarRentalTest {
     }
     
     @Test
-    @Feature("TC026 Success Search Car Rental( Drop Off Different Location )")
-    public void TC026_testSuccessSearchCarRentallDropOffDiffLocation() {
+    @Feature("TC027 Success Search Car Rental( Drop Off Different Location )")
+    public void TC027_testSuccessSearchCarRentallDropOffDiffLocation() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
@@ -100,7 +100,7 @@ public class App06CarRentalTest {
         selectAge();
         searchCarRentalButton();
         verifySuccessSearchCarRentalDiffLocation();
-        takeScreenshot("TC026_testSuccessSearchCarRentallDropOffDiffLocation");
+        takeScreenshot("TC027_testSuccessSearchCarRentallDropOffDiffLocation");
         resetCarRentalPage();
 
         String endTime = getCurrentTimestamp();
@@ -108,15 +108,15 @@ public class App06CarRentalTest {
     }
 
     @Test
-    @Feature("TC027 Failed Search Cars Rentals (dont do anything with the field)")
-    public void TC027_testFailedSearchCarsRentals() {
+    @Feature("TC028 Failed Search Cars Rentals (dont do anything with the field)")
+    public void TC028_testFailedSearchCarsRentals() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
         clickPickUpLocationTextField();
         emptyPickUpLocationTextField();
         searchCarRentalButton();
         verifyFailSearchCarRental();
-        takeScreenshot("TC027_testFailedSearchCarsRentals");
+        takeScreenshot("TC028_testFailedSearchCarsRentals");
         resetCarRentalPage();
         String endTime = getCurrentTimestamp();
         attachTimestamp("Test End Time", endTime);
@@ -306,8 +306,8 @@ public class App06CarRentalTest {
     @Step("Click button search Car Rental")
     private void searchCarRentalButton() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
-                "#__next > div.car-search-form-wrapper > div > div.title-wrapper > div.car-card.large.gray.car-search-form > div.car-search-content > button")));
+        WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+                "//*[@class='car-button car-button-hover car-button-default car-button-shape-default search-button']")));
         searchButton.click();
     }
 
