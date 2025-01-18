@@ -122,7 +122,7 @@ public class App07CarTransferTest {
         selectCars();
         clickContinue();
         verifyFailedBookCarEmptyField();
-        takeScreenshot("TC035_testSuccessSearchCarTransferDropOff");
+        takeScreenshot("TC037_FailedBookTransferCarEmptyField");
         resetCarTransferPage();
 
         String endTime = getCurrentTimestamp();
@@ -388,7 +388,7 @@ public class App07CarTransferTest {
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
     }
 
-    @Step("Verify Fail Search Car Transfer Pick Up")
+    @Step("Verify Success Search Car Transfer Pick Up")
     private void verifySuccessSearchCarTransferPickUp() {
         driver = app.getDriver();
 
@@ -410,7 +410,7 @@ public class App07CarTransferTest {
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
     }
 
-    @Step("Verify Fail Search Car Transfer Drop Off")
+    @Step("Verify Success Search Car Transfer Drop Off")
     private void verifySuccessSearchCarTransferDropOff() {
         driver = app.getDriver();
 
@@ -525,9 +525,9 @@ public class App07CarTransferTest {
         }
     }
 
-    // @AfterClass
-    // @Description("Close Browser")
-    // public void tearDown(){
-    //     app.closBrowser();
-    // }
+    @AfterClass
+    @Description("Close Browser")
+    public void tearDown(){
+        app.closBrowser();
+    }
 }
