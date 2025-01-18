@@ -21,6 +21,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
@@ -71,6 +72,26 @@ public class App07CarTransferTest {
     }
 
     @Test
+    @Feature("TC035 Success Search Car Transfer (Drop Off)")
+    public void TC035_testSuccessSearchCarTransferDropOff() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+        clickDropOff();
+        inputPickUpPoint("Houston");
+        selectInputPoint();
+        selectAirPort();
+        selectDate();
+        selectTime();
+        searchButtonClick2();
+        verifySuccessSearchCarTransferDropOff();
+        takeScreenshot("TC035_testSuccessSearchCarTransferDropOff");
+        resetCarTransferPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
     @Feature("TC036 Fail Search Car Transfer (Empty Field)")
     public void TC036_testFailSearchCarTransfer() {
         String startTime = getCurrentTimestamp();
@@ -79,6 +100,30 @@ public class App07CarTransferTest {
         searchCarTransferButton();
         verifyFailSearchCarTransfer();
         takeScreenshot("TC036_testFailSearchCarTransfer");
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
+    @Feature("TC037 Failed book Transfer Car (EmptyField)")
+     public void TC037_FailedBookTransferCarEmptyField() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+        navigateToCarRentalPage();
+        selectCarTransfer();
+        clickDropOff();
+        inputPickUpPoint("Houston");
+        selectInputPoint();
+        selectAirPort();
+        selectDate();
+        selectTime();
+        searchButtonClick2();
+        selectCars();
+        clickContinue();
+        verifyFailedBookCarEmptyField();
+        takeScreenshot("TC035_testSuccessSearchCarTransferDropOff");
+        resetCarTransferPage();
 
         String endTime = getCurrentTimestamp();
         attachTimestamp("Test End Time", endTime);
@@ -108,6 +153,119 @@ public class App07CarTransferTest {
                 .until(ExpectedConditions
                         .elementToBeClickable(By.cssSelector("#pick")));
         carTransfer.click();
+    }
+
+    @Step("Click Drop Off")
+    private void clickDropOff() {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement carTransfer = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector("#drop")));
+        carTransfer.click();
+    }
+
+    @Step("Input Pick Up Point")
+    private void inputPickUpPoint(String place) {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement pickUpPoint = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div:nth-child(2) > div.index-layer > div.index-banner-wrapper > div.index-searchBox > div > div:nth-child(3) > div:nth-child(1) > div.airshbox-form__address_drop > div > div:nth-child(1) > div > div.thanos-input-pop.thanos-address.airshbox-address__airport > div.thanos-input > div > input")));
+        pickUpPoint.click();
+        pickUpPoint.clear();
+        pickUpPoint.sendKeys(place);
+    }
+    
+    @Step("Select Pick Up Point")
+    private void selectInputPoint() {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement pickUpPoint = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div:nth-child(2) > div.index-layer > div.index-banner-wrapper > div.index-searchBox > div > div:nth-child(3) > div:nth-child(1) > div.airshbox-form__address_drop > div > div:nth-child(1) > div > div.thanos-input-pop.thanos-address.airshbox-address__airport.is-active > div.select-panel-wrapper > div > div.thanos-select-content > div.el-scrollbar.thanos-scroller.thanos-select-scroller > div.el-scrollbar__wrap > div > div.address-fuzzy > ul > li:nth-child(3)")));
+        pickUpPoint.click();
+    }
+    
+    @Step("Select Airport")
+    private void selectAirPort() {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement AirPort = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div:nth-child(2) > div.index-layer > div.index-banner-wrapper > div.index-searchBox > div > div:nth-child(3) > div:nth-child(1) > div.airshbox-form__address_drop > div > div:nth-child(2) > div.relative > div.thanos-input-pop.airshbox-address__airport > div.thanos-input > div > input")));
+        AirPort.click();
+
+        WebElement Place = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div:nth-child(2) > div.index-layer > div.index-banner-wrapper > div.index-searchBox > div > div:nth-child(3) > div:nth-child(1) > div.airshbox-form__address_drop > div > div:nth-child(2) > div.relative > div.thanos-input-pop.airshbox-address__airport.is-active > div.select-panel-wrapper > div > div.thanos-select-content > div.el-scrollbar.thanos-scroller.thanos-select-scroller > div.el-scrollbar__wrap > div > div.thanos-airport-home > section:nth-child(1) > div > div:nth-child(1)")));
+        Place.click();
+    }
+
+    @Step("Select Date")
+    private void selectDate() {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement clickDate = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div:nth-child(2) > div.index-layer > div.index-banner-wrapper > div.index-searchBox > div > div:nth-child(3) > div:nth-child(1) > div.airshbox-form__detail > div.airshbox-form__time > div > div.airshbox-calendar > div.thanos-input-pop.airshbox-calendar__input > div.thanos-input > div > input")));
+        clickDate.click();
+
+        WebElement selectDate = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div:nth-child(2) > div.index-layer > div.index-banner-wrapper > div.index-searchBox > div > div:nth-child(3) > div:nth-child(1) > div.airshbox-form__detail > div.airshbox-form__time > div > div.airshbox-calendar > div.thanos-input-pop.airshbox-calendar__input.is-active > div.select-panel-wrapper > div > div.c-calendar__body > div:nth-child(2) > div.c-calendar-month__days > ul:nth-child(3) > li:nth-child(5) > div > span")));
+        selectDate.click();
+    }
+
+    @Step("Select Time")
+    private void selectTime() {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement clickTime = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div:nth-child(2) > div.index-layer > div.index-banner-wrapper > div.index-searchBox > div > div:nth-child(3) > div:nth-child(1) > div.airshbox-form__detail > div.airshbox-form__time > div > div.airshbox-timepicker > div:nth-child(1) > div > div.thanos-input > div > input")));
+        clickTime.click();
+
+        WebElement selectHour = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div:nth-child(2) > div.index-layer > div.index-banner-wrapper > div.index-searchBox > div > div:nth-child(3) > div:nth-child(1) > div.airshbox-form__detail > div.airshbox-form__time > div > div.airshbox-timepicker > div:nth-child(1) > div > div.select-panel-wrapper > div > div > div > div.el-scrollbar__wrap > div > div > div.el-scrollbar.thanos-scroller.scroll-container.hour.hide-bar > div.el-scrollbar__wrap > div > ul > li:nth-child(5)")));
+        selectHour.click();
+
+        WebElement selectMinutes = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div:nth-child(2) > div.index-layer > div.index-banner-wrapper > div.index-searchBox > div > div:nth-child(3) > div:nth-child(1) > div.airshbox-form__detail > div.airshbox-form__time > div > div.airshbox-timepicker > div:nth-child(1) > div > div.select-panel-wrapper > div > div > div > div.el-scrollbar__wrap > div > div > div:nth-child(2) > div.el-scrollbar__wrap > div > ul > li:nth-child(4)")));
+        selectMinutes.click();
+    }
+
+    @Step("Select Cars")
+    private void selectCars() {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement selectCar = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div.list-layer > div.page-content-box.main.fr-lt > div.thanos-theme.list-main-view > div:nth-child(2) > div.group-content.fr-lc.bgf.is-fold.group-content-newversion")));
+        selectCar.click();
+
+        WebElement bookCar = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div.list-layer > div.page-content-box.main.fr-lt > div.thanos-theme.list-main-view > div:nth-child(2) > div.prds-wrapper > div > div.vnd-book.fr-rc > div.book-btn.fr-cc")));
+        bookCar.click();
+    }
+
+    @Step("Click Continue")
+    private void clickContinue() {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement continues = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div.booking-page.booking-page-newversion > div > div.section-left > div.price-summary-wrap.price-summary-wrap-newversion.price-summary-wrap-left-newversion > div.book-btn")));
+        Actions actions = new Actions(app.getDriver());
+        actions.moveToElement(continues).perform();
+        continues.click();
     }
 
     @Step("Input form with Flight Number:{flightNumber}")
@@ -181,6 +339,16 @@ public class App07CarTransferTest {
         search.click();
     }
 
+    @Step("Click Search")
+    private void searchButtonClick2() {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement search = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#__next > div:nth-child(2) > div.index-layer > div.index-banner-wrapper > div.index-searchBox > div > div:nth-child(3) > div:nth-child(1) > div.airshbox-form__detail > div.airshbox-form__button.box-solid")));
+        search.click();
+    }
+
     @Step("Select Flight")
     private void selectFlight() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
@@ -242,6 +410,50 @@ public class App07CarTransferTest {
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
     }
 
+    @Step("Verify Fail Search Car Transfer Drop Off")
+    private void verifySuccessSearchCarTransferDropOff() {
+        driver = app.getDriver();
+
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector(
+                "#__next > div.list-layer > div.page-content-box.main.fr-lt > div.thanos-theme.list-main-view > div.list-notice-bar.fr-sc.list-notice-bar-newversion > div.notice-content.bgf.fl1.fr-lc > span");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
+    @Step("Verify Fail Book Car Transfer Empty Field")
+    private void verifyFailedBookCarEmptyField() {
+        driver = app.getDriver();
+
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector(
+                "#__next > div.booking-page.booking-page-newversion > div > div.section-left > div.contact-info > div.form-wrapper > div:nth-child(1) > div.tripui-online-input-help-text.error > div > span");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
     @Step("Take Screenshot")
     private void takeScreenshot(String testName) {
         TakesScreenshot ts = (TakesScreenshot) driver;
@@ -282,6 +494,18 @@ public class App07CarTransferTest {
         driver.navigate().to("https://id.trip.com/airport-transfers/index?locale=en-ID&curr=IDR");
     }
 
+    @Step("Reset Car Transfer Page")
+    private void resetCarTransferBookPage() {
+        driver.manage().deleteAllCookies();
+
+        // Execute JavaScript to clear localStorage and sessionStorage
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.localStorage.clear();");
+        js.executeScript("window.sessionStorage.clear();");
+
+        driver.navigate().to("https://id.trip.com/airport-transfers/list?lang=en-ID&language=en-ID&locale=en-ID&curr=IDR&pttype=18&ptgroup=18&udt=&dudt=2025-02-14%2004%3A30&adult=2&children=0&cid=26619&cnm=Houston&ctid=66&ctnm=United%20States&poiadr=&poilat=29.760193&poilng=-95.369392&poicoordtype=WGS84&poinm=Downtown%20Houston&poiref=5ECA3E3EB808E0CB3A00296A27989F7702BD56ABBDD303B2DAE996BB63E5DD63E449CB795045E4FFB2B310A5091824920B00110A26CD760C&stnadt=&stncd=IAH&stnddt=&stnlat=29.99022&stnlng=-95.336783&stnnm=George%20Bush%20Intercontinental%20Airport&stnno=&stnsubnm=&stnsubcd=&stnnorefs=&stnid=&poicityid=26619&carPlaceId=121196729&flightOrderId=&flightNo=&flightTime=&fromAirportCd=&fromAirportNm=&fromAirportSubnm=&fromAirportCid=0&toAirportCd=&toAirportNm=&toAirportSubnm=&toAirportCid=0");
+    }
+
     @Attachment(value = "{description}", type = "text/plain")
     public String attachTimestamp(String description, String timestamp) {
         return timestamp;
@@ -301,9 +525,9 @@ public class App07CarTransferTest {
         }
     }
 
-    @AfterClass
-    @Description("Close Browser")
-    public void tearDown(){
-        app.closBrowser();
-    }
+    // @AfterClass
+    // @Description("Close Browser")
+    // public void tearDown(){
+    //     app.closBrowser();
+    // }
 }
