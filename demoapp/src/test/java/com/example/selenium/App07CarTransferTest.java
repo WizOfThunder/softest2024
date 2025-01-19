@@ -107,7 +107,7 @@ public class App07CarTransferTest {
 
     @Test
     @Feature("TC037 Failed book Transfer Car (EmptyField)")
-     public void TC037_FailedBookTransferCarEmptyField() {
+    public void TC037_FailedBookTransferCarEmptyField() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
         navigateToCarRentalPage();
@@ -123,6 +123,56 @@ public class App07CarTransferTest {
         clickContinue();
         verifyFailedBookCarEmptyField();
         takeScreenshot("TC037_FailedBookTransferCarEmptyField");
+        resetCarTransferPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+    
+    @Test
+    @Feature("TC038 Failed book Transfer Car (Invalid Email)")
+    public void TC038_FailedBookTransferCarInvalidEmail() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+        navigateToCarRentalPage();
+        selectCarTransfer();
+        clickDropOff();
+        inputPickUpPoint("Houston");
+        selectInputPoint();
+        selectAirPort();
+        selectDate();
+        selectTime();
+        searchButtonClick2();
+        selectCars();
+        inputBookingField("akun", "istts", "akun", "85246880675");
+        clickContinue();
+        verifyFailedBookCarInvalidEmail();
+        takeScreenshot("TC038_FailedBookTransferCarInvalidEmail");
+        resetCarTransferPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
+    @Feature("TC039 Failed book Transfer Car (Invalid Phone Number)")
+    public void TC039_FailedBookTransferCarInvalidPhone() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+        navigateToCarRentalPage();
+        selectCarTransfer();
+        clickDropOff();
+        inputPickUpPoint("Houston");
+        selectInputPoint();
+        selectAirPort();
+        selectDate();
+        selectTime();
+        searchButtonClick2();
+        selectCars();
+        inputBookingField("akun", "istts", "akunistts@gmail.com", "0");
+        clickContinue();
+        verifyFailedBookCarInvalidPhone();
+        takeScreenshot("TC039_FailedBookTransferCarInvalidPhone");
         resetCarTransferPage();
 
         String endTime = getCurrentTimestamp();
@@ -358,6 +408,36 @@ public class App07CarTransferTest {
         flight.click();
     }
 
+    @Step("input Booking Field")
+    private void inputBookingField(String firstName, String lastName, String email, String phone) {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement firstNameField = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector("#__next > div.booking-page.booking-page-newversion > div > div.section-left > div.contact-info > div.form-wrapper > div:nth-child(1) > div > input[type=text]")));
+        Actions actions = new Actions(app.getDriver());
+        actions.moveToElement(firstNameField).perform();
+        firstNameField.clear();
+        firstNameField.sendKeys(firstName);
+
+        WebElement lastNameField = wait
+            .until(ExpectedConditions
+                .elementToBeClickable(By.cssSelector("#__next > div.booking-page.booking-page-newversion > div > div.section-left > div.contact-info > div.form-wrapper > div:nth-child(2) > div > input[type=text]")));
+        lastNameField.clear();
+        lastNameField.sendKeys(lastName);            
+
+        WebElement emailField = wait
+            .until(ExpectedConditions
+                .elementToBeClickable(By.cssSelector("#__next > div.booking-page.booking-page-newversion > div > div.section-left > div.contact-info > div.form-wrapper > div.form-email-wrapper > div > div > input[type=text]")));
+        emailField.clear();
+        emailField.sendKeys(email);
+                        
+        WebElement phoneField = wait
+            .until(ExpectedConditions
+                .elementToBeClickable(By.cssSelector("#__next > div.booking-page.booking-page-newversion > div > div.section-left > div.contact-info > div.form-wrapper > div.form-phone-wrapper > div.tripui-online-input.form-phone > div > input[type=text]")));
+        phoneField.clear();
+        phoneField.sendKeys(phone);
+    }
+
     @Step("Click button search Car Transfer")
     private void searchCarTransferButton() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
@@ -454,6 +534,50 @@ public class App07CarTransferTest {
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
     }
 
+    @Step("Verify Fail Book Car Transfer Invalid Email")
+    private void verifyFailedBookCarInvalidEmail() {
+        driver = app.getDriver();
+
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector(
+                "#__next > div.booking-page.booking-page-newversion > div > div.section-left > div.contact-info > div.form-wrapper > div.form-email-wrapper > div > div.tripui-online-input-help-text.error > div > span");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
+    @Step("Verify Fail Book Car Transfer Invalid Email")
+    private void verifyFailedBookCarInvalidPhone() {
+        driver = app.getDriver();
+
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector(
+                "#__next > div.booking-page.booking-page-newversion > div > div.section-left > div.contact-info > div.form-wrapper > div.form-phone-wrapper > div.tripui-online-input.form-phone > div.tripui-online-input-help-text.error > div > span");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
     @Step("Take Screenshot")
     private void takeScreenshot(String testName) {
         TakesScreenshot ts = (TakesScreenshot) driver;
@@ -525,9 +649,9 @@ public class App07CarTransferTest {
         }
     }
 
-    @AfterClass
-    @Description("Close Browser")
-    public void tearDown(){
-        app.closBrowser();
-    }
+    // @AfterClass
+    // @Description("Close Browser")
+    // public void tearDown(){
+    //     app.closBrowser();
+    // }
 }
