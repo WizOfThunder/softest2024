@@ -93,7 +93,7 @@ public class App02RegisterTest
 
         closeBlockingElement();
         registerButton();
-        emailFill("testingSeleniumTest@gmail.com");
+        emailFill("SeleniumSoftTest@gmail.com");
         continueButton();
         passwordFill("testingSelenium");
         createAccountButton();

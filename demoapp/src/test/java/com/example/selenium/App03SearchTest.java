@@ -64,8 +64,6 @@ public class App03SearchTest
 
         takeScreenshot("TC009_testSearchByInput");
 
-        resetPage();
-
         String endTime = getCurrentTimestamp();
         attachTimestamp("Test End Time", endTime);
     }
@@ -162,7 +160,8 @@ public class App03SearchTest
         Assert.assertTrue(successElement.getText().contains(result), "Success message or profile element not displayed!");
     }
 
-    @Step("Reset Page")
+    @AfterMethod
+    @Description("Reset To Main Page")
     private void resetPage() {
         driver.manage().deleteAllCookies();
 
