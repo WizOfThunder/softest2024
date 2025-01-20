@@ -51,7 +51,7 @@ public class App07CarTransferTest {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
-        navigateToCarRentalPage();
+        navigateToCarTransferPage();
         selectCarTransfer();
         clickPickUp();
         clickArrivalAirport();
@@ -110,7 +110,7 @@ public class App07CarTransferTest {
     public void TC037_FailedBookTransferCarEmptyField() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
-        navigateToCarRentalPage();
+        navigateToCarTransferPage();
         selectCarTransfer();
         clickDropOff();
         inputPickUpPoint("Houston");
@@ -134,7 +134,7 @@ public class App07CarTransferTest {
     public void TC038_FailedBookTransferCarInvalidEmail() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
-        navigateToCarRentalPage();
+        navigateToCarTransferPage();
         selectCarTransfer();
         clickDropOff();
         inputPickUpPoint("Houston");
@@ -159,7 +159,7 @@ public class App07CarTransferTest {
     public void TC039_FailedBookTransferCarInvalidPhone() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
-        navigateToCarRentalPage();
+        navigateToCarTransferPage();
         selectCarTransfer();
         clickDropOff();
         inputPickUpPoint("Houston");
@@ -180,7 +180,7 @@ public class App07CarTransferTest {
     }
     
     @Step("Navigate to cars page")
-    private void navigateToCarRentalPage() {
+    private void navigateToCarTransferPage() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
         WebElement carsPage = wait
                 .until(ExpectedConditions.elementToBeClickable(By.cssSelector("#header_action_nav_cars")));
@@ -556,7 +556,7 @@ public class App07CarTransferTest {
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
     }
 
-    @Step("Verify Fail Book Car Transfer Invalid Email")
+    @Step("Verify Fail Book Car Transfer Invalid Phone")
     private void verifyFailedBookCarInvalidPhone() {
         driver = app.getDriver();
 
@@ -649,9 +649,9 @@ public class App07CarTransferTest {
         }
     }
 
-    // @AfterClass
-    // @Description("Close Browser")
-    // public void tearDown(){
-    //     app.closBrowser();
-    // }
+    @AfterClass
+    @Description("Close Browser")
+    public void tearDown(){
+        app.closBrowser();
+    }
 }

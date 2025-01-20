@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterClass;
@@ -21,6 +23,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
@@ -122,6 +125,80 @@ public class App06CarRentalTest {
         attachTimestamp("Test End Time", endTime);
     }
     
+    @Test
+    @Feature("TC029 Failed book Transfer Car (Empty Field)")
+    public void TC029_FailedBookCarRentalsEmptyField() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+        setUpBook();
+        selectCars();
+        delay(10000);
+        inputBookingField("", "", "" , "","",1);
+        clickBookNow();
+        verifyFailedBookCarEmptyField();
+        takeScreenshot("TC029_FailedBookCarRentalsEmptyField");
+        resetCarRentalPage();
+        
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+    
+    @Test
+    @Feature("TC030 Failed book Transfer Car (Invalid Email)")
+    public void TC030_FailedBookCarRentalsInvalidEmail() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+        setUpBook();
+        selectCars();
+        delay(10000);
+        inputBookingField("akun", "istts","" , "85246880674", "UA035",2);
+        clickBookNow();
+        verifyFailedBookCarInvalidEmail();
+        takeScreenshot("TC030_FailedBookCarRentalsInvalidEmail");
+        resetCarRentalPage();
+               
+       
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
+    @Feature("TC031 Failed book Transfer Car (Invalid Phone Number)")
+    public void TC031_FailedBookCarRentalsInvalidPhone() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+        setUpBook();
+        selectCars();
+        delay(10000);
+        inputBookingField("akun", "istts","akunistts@gmail.com" , "0", "UA035",3);
+        clickBookNow();
+        verifyFailedBookCarInvalidPhone();
+        takeScreenshot("TC031_FailedBookCarRentalsInvalidPhone");
+        resetCarRentalPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+    
+    @Test
+    @Feature("TC032 Failed book Transfer Car (Invalid Flight Number)")
+    public void TC032_FailedBookCarRentalsInvalidFlight() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+        setUpBook();
+        selectCars();
+        delay(10000);
+        inputBookingField("akun", "istts","akunistts@gmail.com" , "85246888888", "UA035",4);
+        clickBookNow();
+        verifyFailedBookCarInvalidFlight();
+        takeScreenshot("TC032_FailedBookCarRentalsInvalidFlight");
+        resetCarRentalPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
     @Step("Navigate to cars page")
     private void navigateToCarRentalPage() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
@@ -174,7 +251,6 @@ public class App06CarRentalTest {
         pickUpLocation.click();
     }
 
-
     @Step("Click Drop Off Location")
     private void clickDropOffLocation() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
@@ -192,8 +268,6 @@ public class App06CarRentalTest {
                         " #__next > div.car-search-form-wrapper > div > div.title-wrapper > div.car-card.large.gray.car-search-form > div.car-search-content > div.car-location-form-wrapper > div > div:nth-child(3) > div > div.adm-popup.car-dropdown-popup.location-select-item-wrapper > div > div > div > div > div.select-item-wrapper.margin-top-196 > div:nth-child(3) > div.locations-content > div:nth-child(3) > div.car-select-item.select-item-suguest")));
         pickUpLocation.click();
     }
-
-    
 
     @Step("Click Pick Up Date")
     private void clickPickUpDate() {
@@ -231,7 +305,7 @@ public class App06CarRentalTest {
         pickUpHour.click();
     }
 
-        @Step("Click Drop Off Date")
+    @Step("Click Drop Off Date")
     private void clickDropOffDate() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
         WebElement dropOffDate = wait
@@ -377,6 +451,94 @@ public class App06CarRentalTest {
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
     }
     
+    @Step("Verify Fail Book Car Rental Empty Field")
+    private void verifyFailedBookCarEmptyField() {
+        driver = app.getDriver();
+
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector(
+                "#__next > div.car-booking-page > div.left > div:nth-child(3) > div.car-card.large.white.car-booking-driver-wrapper.card > div.driver-form.card-content > div:nth-child(1) > div.car-input-error-info > span");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
+    @Step("Verify Fail Book Car Rental Invalid Email")
+    private void verifyFailedBookCarInvalidEmail() {
+        driver = app.getDriver();
+
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector(
+                "#__next > div.car-booking-page > div.left > div:nth-child(3) > div.car-card.large.white.car-booking-driver-wrapper.card > div.driver-form.card-content > div:nth-child(4) > div.car-input-error-info > span");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
+    @Step("Verify Fail Book Car Transfer Invalid Phone")
+    private void verifyFailedBookCarInvalidPhone() {
+        driver = app.getDriver();
+
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector(
+                "#__next > div.car-booking-page > div.left > div:nth-child(3) > div.car-card.large.white.car-booking-driver-wrapper.card > div.driver-form.card-content > div.car-input.car-mobile-wrap > div.car-mobile-error > div.car-input-error-info > span");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
+    @Step("Verify Fail Book Car Transfer Invalid Phone")
+    private void verifyFailedBookCarInvalidFlight() {
+        driver = app.getDriver();
+
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector(
+                "#__next > div.car-booking-page > div.left > div:nth-child(3) > div.car-card.large.white.car-booking-driver-wrapper.card > div.driver-form.card-content > div:nth-child(7) > div.car-input-error-info > span");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
     @Step("Click Drop Off at Different Location")
     private void clickDropOffAtDiffLocation() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
@@ -424,6 +586,101 @@ public class App06CarRentalTest {
         js.executeScript("window.sessionStorage.clear();");
 
         driver.navigate().to("https://id.trip.com/carhire/?channelid=14409&locale=en-ID&curr=IDR");
+    }
+
+    @Step("Set Up")
+    private void setUpBook() {
+        clickPickUpLocation();
+        selectPickUpLocation();
+        clickPickUpDate();
+        selectPickUpDate();
+        clickPickUpHour();
+        selectPickUpHour();
+        clickDropOffDate();
+        selectDropOffDate();
+        clickDropOffHour();
+        selectDropOffHour();
+        clickDriverLicenceCountry();
+        selectDriverLicenceCountry();
+        clickAge();
+        selectAge();
+        searchCarRentalButton();
+    }
+
+    @Step("Select Cars")
+    private void selectCars() {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement bookCar = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.cssSelector(
+                                "#sticky-container > div > div.car-page-inner > div > div.car-page-main > div.car-vehicle-list > div:nth-child(1) > div > div > div.car-vendor-price > div > div.right-vendor > div > button")));
+        bookCar.click();
+    }
+
+    @Step("Click Book")
+    private void clickBookNow() {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(30));
+        WebElement book = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "#__next > div.car-booking-page > div.left > div:nth-child(3) > div.car-card.large.white.bookContainer > div:nth-child(2) > button")));
+        Actions actions = new Actions(app.getDriver());
+        actions.moveToElement(book).perform();
+        book.click();
+    }
+
+    @Step("input Booking Field")
+    private void inputBookingField(String firstName, String lastName, String email, String phone, String flightNumber, int index) {
+
+        List<String> windowHandles = new ArrayList<>(app.getDriver().getWindowHandles());
+        driver.switchTo().window(windowHandles.get(index));
+
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        Actions actions = new Actions(app.getDriver());
+
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+
+        delay(3000);
+
+        WebElement firstNameField = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector("#__next > div.car-booking-page > div.left > div:nth-child(3) > div.car-card.large.white.car-booking-driver-wrapper.card > div.driver-form.card-content > div:nth-child(1) > div.car-input-wrap > div > input")));
+
+        actions.moveToElement(firstNameField);
+        firstNameField.clear();
+        firstNameField.sendKeys(firstName);
+
+        WebElement lastNameField = wait
+            .until(ExpectedConditions
+                .visibilityOfElementLocated(By.cssSelector("#__next > div.car-booking-page > div.left > div:nth-child(3) > div.car-card.large.white.car-booking-driver-wrapper.card > div.driver-form.card-content > div:nth-child(2) > div.car-input-wrap > div > input")));
+        lastNameField.clear();
+        lastNameField.sendKeys(lastName);            
+
+        WebElement emailField = wait
+            .until(ExpectedConditions
+                .visibilityOfElementLocated(By.cssSelector("#__next > div.car-booking-page > div.left > div:nth-child(3) > div.car-card.large.white.car-booking-driver-wrapper.card > div.driver-form.card-content > div:nth-child(4) > div.car-input-wrap > div > input")));
+        emailField.clear();
+        emailField.sendKeys(email);
+                        
+        WebElement phoneField = wait
+            .until(ExpectedConditions
+                .visibilityOfElementLocated(By.cssSelector("#phoneNumber")));
+        phoneField.clear();
+        phoneField.sendKeys(phone);
+
+        WebElement flightField = wait
+            .until(ExpectedConditions
+                .visibilityOfElementLocated(By.cssSelector("#__next > div.car-booking-page > div.left > div:nth-child(3) > div.car-card.large.white.car-booking-driver-wrapper.card > div.driver-form.card-content > div:nth-child(7) > div.car-input-wrap > div > input")));
+        flightField.clear();
+        flightField.sendKeys(flightNumber);
+    }
+    
+    private void delay(int milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Attachment(value = "{description}", type = "text/plain")
