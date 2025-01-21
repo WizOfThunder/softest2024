@@ -253,14 +253,17 @@ public class App09CruiseTest {
                 "#ibucru-10650039190-room-spread-367340-21687-1-s")));
         showMore.click();
 
-        WebElement plusButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
-                "#ibucru-10650039190-room-num-367340-76026455-room-y > i")));
+        WebElement showMore2 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
+                "#ibucru-10650039190-room-spread-367340-21680-2-s")));
+        actions.moveToElement(showMore2).perform();;
+
+        WebElement plusButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(
+                "#ibucru-10650039190-room-num-367340-76026420-room-y > i")));
         plusButton.click();
 
         WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
                 "#ibucru-10650039190-room-next-367340 > button")));
         actions.moveToElement(nextButton).perform();
-        ;
         nextButton.click();
     }
 
