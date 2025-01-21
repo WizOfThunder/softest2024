@@ -127,6 +127,88 @@ public class App05TrainsTest
         attachTimestamp("Test End Time", endTime);
     }
 
+    @Test
+    @Feature("TC022 Failed Book Train (empty field)")
+    public void TC022_testFailedBookTrainEmptyField(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
+        resetBookTrainsPage();
+        clickSelectTrainButton();
+        clickReserveTrainButton();
+        clickBookTrainButton();
+        verifyFailedBookTrainEmptyField();
+
+        takeScreenshot("TC022_testFailedBookTrainEmptyField");
+        
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
+    @Feature("TC023 Failed Book Train (invalid email)")
+    public void TC023_testFailedBookTrainInvalidEmail(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
+        resetBookTrainsPage();
+        clickSelectTrainButton();
+        clickReserveTrainButton();
+        clickAddAdultButton();
+        inputPassengerInfo("Passport", "G2784", "Singapore", "13", "Mar", "2029", "Istts", "Akun", "14", "Mar", "1984");
+        inputContactInfo("Akun", "akun", "0814332558");
+        clickBookTrainButton();
+
+        verifyFailedBookTrainInvalidEmail();
+        takeScreenshot("TC023_testFailedBookTrainInvalidEmail");
+        
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
+    @Feature("TC024 Failed Book Train (invalid phone number)")
+    public void TC024_testFailedBookTrainInvalidPhoneNumber(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
+        resetBookTrainsPage();
+        clickSelectTrainButton();
+        clickReserveTrainButton();
+        clickAddAdultButton();
+        inputPassengerInfo("Passport", "G2784", "Singapore", "13", "Mar", "2029", "Istts", "Akun", "14", "Mar", "1984");
+        inputContactInfo("Akun", "akunistts@gmail.com", "00000000000000000");
+        clickBookTrainButton();
+
+        verifyFailedBookTrainInvalidPhoneNumber();
+        
+        takeScreenshot("TC024_testFailedBookTrainInvalidPhoneNumber");
+        
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
+    @Feature("TC025 Success Book Train")
+    public void TC025_testSuccessBookTrain(){
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
+        resetBookTrainsPage();
+        clickSelectTrainButton();
+        clickReserveTrainButton();
+        clickAddAdultButton();
+        inputPassengerInfo("Passport", "G2784", "Singapore", "13", "Mar", "2029", "Istts", "Akun", "14", "Mar", "1984");
+        inputContactInfo("Akun", "akunistts@gmail.com", "08143325581");
+        clickBookTrainButton();
+        verifySuccessBookTrain();
+        
+        takeScreenshot("TC025_testSuccessBookTrain");
+        
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
     @Step("Navigate to trains page")
     private void navigateToTrainsPage(){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
@@ -230,6 +312,86 @@ public class App05TrainsTest
         guides.click();
     }
 
+    @Step("Click Select Train Button")
+    private void clickSelectTrainButton(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#__next > div.pv > div.train-wrapper.train-flex.list-v2 > div.train-content > div.train-result.train-result2 > div:nth-child(2) > div.train-result-list2 > div.train-result-list-bd2 > div.rbox > div > button > span")));
+        button.click();
+    }
+
+    @Step("Click Reserve Train Button")
+    private void clickReserveTrainButton(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#__next > div.pv > div.train-wrapper.train-flex.list-v2 > div.train-content > div.train-result.train-result2 > div:nth-child(2) > div.train-detail-margin2 > div > div > div > div > div.swiper-wrapper > div.swiper-slide.swiper-slide-active > div > div > button")));
+        button.click();
+    }
+
+    @Step("Click Add Adult Button")
+    private void clickAddAdultButton(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#__next > div.pv > div.h5hide > div > div.book-main > div.train-white.book-pasg > div.pasg-add-btn > button:nth-child(1)")));
+        button.click();
+    }
+
+    @Step("Input Passenger Info")
+    private void inputPassengerInfo(String id_type, String id_number, String country, String exp_day, String exp_month, String exp_year, String last_name, String first_name, String dob_day, String dob_month, String dob_year){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@class='input-click-wrap'])[1]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'"+id_type+"')]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@type='text'])[2]")));
+        input.sendKeys(id_number);
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@class='input-click-wrap'])[2]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[contains(text(),'"+country+"')])[1]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@class='input-click-wrap'])[3]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[text()='"+exp_month+"'])[1]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[text()='"+exp_day+"'])[1]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[text()='"+exp_year+"'])[1]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[text()='Done'])[1]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@type='text'])[6]")));
+        input.sendKeys(last_name);
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@type='text'])[7]")));
+        input.sendKeys(first_name);
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@class='input-click-wrap'])[4]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[text()='"+dob_month+"'])[2]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[text()='"+dob_day+"'])[2]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[text()='"+dob_year+"'])[1]")));
+        input.click();
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[text()='Done'])[2]")));
+        input.click();
+    }
+
+    @Step("Input Contact Info")
+    private void inputContactInfo(String contact_name, String email, String phone_number){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@type='text'])[9]")));
+        input.sendKeys(contact_name);
+        input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@type='text'])[11]")));
+        input.sendKeys(email);
+        if (!phone_number.equals("")) {
+            input = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[@type='text'])[13]")));
+            input.sendKeys(phone_number);            
+        }
+    }
+
+    @Step("Click Book Train Button")
+    private void clickBookTrainButton(){
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#__next > div.pv > div.h5hide > div > div.book-main > div.train-white.book-botm > button")));
+        button.click();
+    }
+
     @Step("Verify success search trains")
     private void verifySuccessSearchTrains() {
         driver = app.getDriver();
@@ -306,6 +468,63 @@ public class App05TrainsTest
         Assert.assertTrue(successElement.getText().contains("Train Ticket and Travel FAQs"), "Success element not displayed!");
     }
 
+    @Step("Verify failed Book Train (empty field)")
+    private void verifyFailedBookTrainEmptyField() {
+        driver = app.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+        By successElementSelector = By.xpath(
+                "//*[contains(text(),'Please select a passenger')]");
+        
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
+    @Step("Verify failed Book Train (invalid email)")
+    private void verifyFailedBookTrainInvalidEmail() {
+        driver = app.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+        By successElementSelector = By.xpath(
+                "//*[contains(text(),'Please enter a valid email address.')]");
+        
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
+    @Step("Verify failed Book Train (invalid phone number)")
+    private void verifyFailedBookTrainInvalidPhoneNumber() {
+        driver = app.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+        By successElementSelector = By.xpath(
+                "//*[contains(text(),'Please enter a valid phone number')]");
+        
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
+    
+    @Step("Verify Success Book Train")
+    private void verifySuccessBookTrain() {
+        driver = app.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(100));
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+        By successElementSelector = By.xpath(
+                "//*[contains(text(),'Select a Payment Method')]");
+        
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
     @Step("Reset Trains Page")
     private void resetTrainsPage() {
         driver.manage().deleteAllCookies();
@@ -316,6 +535,18 @@ public class App05TrainsTest
         js.executeScript("window.sessionStorage.clear();");
 
         driver.navigate().to("https://id.trip.com/trains/?locale=en-ID&curr=IDR");
+    }
+
+    @Step("Reset to Bokk Trains Page")
+    private void resetBookTrainsPage() {
+        driver.manage().deleteAllCookies();
+
+        // Execute JavaScript to clear localStorage and sessionStorage
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.localStorage.clear();");
+        js.executeScript("window.sessionStorage.clear();");
+
+        driver.navigate().to("https://id.trip.com/trains/china/list?locale=en-ID&curr=IDR&departureStation=%E4%B8%8A%E6%B5%B7&arrivalStation=%E6%B7%B1%E5%9C%B3&displayDepartureStation=Shanghai+(%E4%B8%8A%E6%B5%B7)&displayArrivalStation=Shenzhen+(%E6%B7%B1%E5%9C%B3)&departDate=2025-02-13&highSpeedOnly=1");
     }
     
     @Step("Take Screenshot")
