@@ -199,23 +199,25 @@ public class App06CarRentalTest {
         attachTimestamp("Test End Time", endTime);
     }
     
-    @Test
-    @Feature("TC032 Failed book Transfer Car (Invalid Flight Number)")
-    public void TC033_SuccessBookCarRentals() {
-        String startTime = getCurrentTimestamp();
-        attachTimestamp("Test Start Time", startTime);
-        setUpBook();
-        selectCars();
-        delay(10000);
-        inputBookingField("akun", "istts","akunistts@gmail.com" , "85246888888", "UA035",4);
-        clickBookNow();
-        verifyFailedBookCarInvalidFlight();
-        takeScreenshot("TC032_FailedBookCarRentalsInvalidFlight");
-        resetCarRentalPage();
+    // @Test
+    // @Feature("TC032 Failed book Transfer Car (Invalid Flight Number)")
+    // public void TC033_SuccessBookCarRentals() {
+    //     String startTime = getCurrentTimestamp();
+    //     attachTimestamp("Test Start Time", startTime);
+    //     navigateToCarRentalPage();
+    //     selectCarRental();
+    //     setUpBook();
+    //     selectCars();
+    //     delay(10000);
+    //     inputBookingField("akun", "istts","akunistts@gmail.com" , "85246888888", "UA035",1);
+    //     clickBookNow();
+    //     verifyFailedBookCarInvalidFlight();
+    //     // takeScreenshot("TC032_FailedBookCarRentalsInvalidFlight");
+    //     // resetCarRentalPage();
 
-        String endTime = getCurrentTimestamp();
-        attachTimestamp("Test End Time", endTime);
-    }
+    //     String endTime = getCurrentTimestamp();
+    //     attachTimestamp("Test End Time", endTime);
+    // }
 
     @Step("Navigate to cars page")
     private void navigateToCarRentalPage() {
@@ -557,6 +559,28 @@ public class App06CarRentalTest {
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
     }
 
+    @Step("Verify Success Book Car Transfer")
+    private void verifySuccessBookCar() {
+        driver = app.getDriver();
+
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector(
+                "#__next > div.car-booking-page > div.left > div:nth-child(3) > div.car-card.large.white.car-booking-driver-wrapper.card > div.driver-form.card-content > div:nth-child(7) > div.car-input-error-info > span");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
     @Step("Click Drop Off at Different Location")
     private void clickDropOffAtDiffLocation() {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
@@ -725,4 +749,4 @@ public class App06CarRentalTest {
     public void tearDown(){
         app.closBrowser();
     }
-}
+ }

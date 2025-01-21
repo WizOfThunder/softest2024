@@ -55,8 +55,6 @@ public class App09CruiseTest {
         navigateToCruisePage();
         clickDepartFrom();
         selectDepartFrom();
-        //clickSailFor();
-        //selectSailFor();
         clickMonthOfDeparture();
         selectMonthOfDeparture();
         searchCruiseButton();
@@ -142,20 +140,20 @@ public class App09CruiseTest {
     }
 
     @Test
-    @Feature("TC052 Success Book Cruise ")
-    public void TC052_testSuccessBookCruise() {
+    @Feature("TC052 Fail Book Cruise Invalid ID")
+    public void TC052_testFailedBookCruiseInvalidID() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
 
-        navigateToCruisePage();
         setUpCruiseBook();
-        selectCruise(1);
-        clickSelectRoom(2);
+        selectCruise(9);
+        clickSelectRoom(10);
         selectCruiseRoom();
         inputBookingField("akun", "akunistts@gmail.com", "85246888888", 0);
+        inputGuestField("akun", "istts", "jakarta", "85246888888", "1234-5678-9012-3456");
         clickPayNow();
-        // verifyFailedBookCruiseInvalidPhone();
-        // takeScreenshot("TC052_testSuccessBookCruise");
+        verifyFailedBookCruiseInvalidID();
+        takeScreenshot("TC052_testFailedBookCruiseInvalidID");
 
         String endTime = getCurrentTimestamp();
         attachTimestamp("Test End Time", endTime);
@@ -304,28 +302,120 @@ public class App09CruiseTest {
     }
 
     @Step("input Booking Field")
-    private void inputBookingField(String Name, String email, String phone,int index) {
+    private void inputBookingField(String Name, String email, String phone, int index) {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
         WebElement nameField = wait
                 .until(ExpectedConditions
-                        .visibilityOfElementLocated(By.cssSelector("#ibucru-10650039186-passager-box-name > div.input-box-component_base_input_container.blur > div > input[type=text]")));
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "#ibucru-10650039186-passager-box-name > div.input-box-component_base_input_container.blur > div > input[type=text]")));
         Actions actions = new Actions(app.getDriver());
         actions.moveToElement(nameField);
         nameField.clear();
         nameField.sendKeys(Name);
 
-
         WebElement emailField = wait
-            .until(ExpectedConditions
-                .visibilityOfElementLocated(By.cssSelector("#ibucru-10650039186-passager-box-email > div.input-box-component_base_input_container.with-prefix-icon.blur > div > input[type=text]")));
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "#ibucru-10650039186-passager-box-email > div.input-box-component_base_input_container.with-prefix-icon.blur > div > input[type=text]")));
         emailField.clear();
         emailField.sendKeys(email);
-                        
+
         WebElement phoneField = wait
-            .until(ExpectedConditions
-                .visibilityOfElementLocated(By.cssSelector("#J-contactInfo > div > div:nth-child(2) > div > div > div > div:nth-child(1) > div > div.input-box-component_base_input_container.blur > div > input[type=text]")));
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "#J-contactInfo > div > div:nth-child(2) > div > div > div > div:nth-child(1) > div > div.input-box-component_base_input_container.blur > div > input[type=text]")));
         phoneField.clear();
         phoneField.sendKeys(phone);
+    }
+
+    @Step("input Guest Field")
+    private void inputGuestField(String firstName,String lastName,String placeOfBirth, String phone,String ID) {
+        WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
+        Actions actions = new Actions(app.getDriver());
+        WebElement firstNameField = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector("#ibucru-10650039186-userinfo-box-name > div.input-box-component_base_input_container.blur > div > input[type=text]")));
+
+        actions.moveToElement(firstNameField).perform();
+        firstNameField.clear();
+        firstNameField.sendKeys(firstName);
+
+        WebElement lastNameField = wait
+            .until(ExpectedConditions
+                .visibilityOfElementLocated(By.cssSelector("#ibucru-10650039186-userinfo-box-surname > div.input-box-component_base_input_container.blur > div > input[type=text]")));
+        lastNameField.clear();
+        lastNameField.sendKeys(lastName);
+                        
+        WebElement birthField = wait
+            .until(ExpectedConditions
+                .visibilityOfElementLocated(By.cssSelector("body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(7) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > input:nth-child(1)")));
+        birthField.clear();
+        birthField.sendKeys(placeOfBirth);
+
+        WebElement phoneField = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "div[class='guestContent'] div[class='rowItem'] div[class='halfItem'] div[class='formItemBox'] div[class='input-box-component_base_input_wrap'] div[class='phonenumber-input-box-component'] div div[class='input-box-component_base'] input[type='text']")));
+        phoneField.clear();
+        phoneField.sendKeys(phone);
+
+        WebElement iDField = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > input:nth-child(1)")));
+        iDField.clear();
+        iDField.sendKeys(ID);
+        
+        WebElement genderField = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > input:nth-child(1)")));
+        genderField.click();
+
+        WebElement selectGender = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "div[class='c-dropdown show'] div:nth-child(2) span:nth-child(1)")));
+        selectGender.click();
+
+        WebElement dateField = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "div[id='ibucru-10650039186-userinfo-box-birthday'] input[type='text']")));
+        dateField.click();
+
+        WebElement selectDate = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(10)")));
+        selectDate.click();
+
+        WebElement done = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1)")));
+        actions.moveToElement(done).perform();
+        done.click();
+
+         WebElement expDate = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "div[class='cardBox'] div[class='rowItem'] div[class='halfItem'] div[class='formItemBox'] div[class='select-container'] div[class='drop-container-date-picker'] div div input[type='text']")));
+        expDate.click();
+
+        WebElement selectEXPDate = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "div[class='cardBox'] div[class='padding dp2-dropdown-block'] div:nth-child(22)")));
+        selectEXPDate.click();
+
+        WebElement done2 = wait
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "div[class='cardBox'] div[class='rowItem'] div[class='halfItem'] div[class='formItemBox'] div[class='select-container'] div[class='drop-container-date-picker'] div div[class='dp2-footer-button']")));
+        actions.moveToElement(done2).perform();
+        done2.click();
+
     }
 
     @Step("Take Screenshot")
@@ -497,6 +587,28 @@ public class App09CruiseTest {
         Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
     }
 
+    @Step("Verify Fail Book Cruise Invalid ID")
+    private void verifyFailedBookCruiseInvalidID() {
+        driver = app.getDriver();
+
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector(
+                "body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
     private void delay(int milliseconds) {
         try {
             Thread.sleep(milliseconds);
@@ -505,9 +617,9 @@ public class App09CruiseTest {
         }
     }
 
-    // @AfterClass
-    // @Description("Close Browser")
-    // public void tearDown(){
-    //     app.closBrowser();
-    // }
+    @AfterClass
+    @Description("Close Browser")
+    public void tearDown(){
+        app.closBrowser();
+    }
 }
