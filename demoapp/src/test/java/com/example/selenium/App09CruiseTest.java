@@ -135,6 +135,27 @@ public class App09CruiseTest {
         clickPayNow();
         verifyFailedBookCruiseInvalidPhone();
         takeScreenshot("TC051_testFailBookCruiseInvalidPhone");
+        resetCruisePage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
+    @Feature("TC052 Success Book Cruise ")
+    public void TC052_testSuccessBookCruise() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
+        navigateToCruisePage();
+        setUpCruiseBook();
+        selectCruise(1);
+        clickSelectRoom(2);
+        selectCruiseRoom();
+        inputBookingField("akun", "akunistts@gmail.com", "85246888888", 0);
+        clickPayNow();
+        // verifyFailedBookCruiseInvalidPhone();
+        // takeScreenshot("TC052_testSuccessBookCruise");
 
         String endTime = getCurrentTimestamp();
         attachTimestamp("Test End Time", endTime);
@@ -260,6 +281,8 @@ public class App09CruiseTest {
         WebElement plusButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(
                 "#ibucru-10650039190-room-num-367340-76026420-room-y > i")));
         plusButton.click();
+
+        delay(2000);
 
         WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
                 "#ibucru-10650039190-room-next-367340 > button")));
@@ -482,9 +505,9 @@ public class App09CruiseTest {
         }
     }
 
-    @AfterClass
-    @Description("Close Browser")
-    public void tearDown(){
-        app.closBrowser();
-    }
+    // @AfterClass
+    // @Description("Close Browser")
+    // public void tearDown(){
+    //     app.closBrowser();
+    // }
 }

@@ -42,6 +42,32 @@ public class App13OtherTest {
     }
 
     @Test
+    @Feature("TC084 Success Book eSIM And SIM")
+    public void TC084_testSuccessBookSIMEmptyField() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+
+        navigateToAttractionAndToursPage();
+        selectESIM();
+        selectPackage();
+        delay(5000);
+        scrollDown(1);
+        clickOptionType();
+        clickNumberOfDays();
+        delay(500);
+        clickBookNow();
+        inputBookingField("akun", "akunistts@gmail.com", "85246888888");
+        clickPay();
+        delay(2000);
+        verifySuccessBookeSIM();
+        takeScreenshot("TC084_testSuccessBookSIMEmptyField");
+        resetPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
     @Feature("TC085 Fail Book eSIM And SIM (Empty Field)")
     public void TC085_testFailBookSIMEmptyField() {
         String startTime = getCurrentTimestamp();
@@ -51,7 +77,7 @@ public class App13OtherTest {
         selectESIM();
         selectPackage();
         delay(5000);
-        scrollDown(1);
+        scrollDown(2);
         clickBookNow();
         delay(500);
         takeScreenshot("TC085_testFailBookSIMEmptyField");
@@ -71,7 +97,7 @@ public class App13OtherTest {
         selectESIM();
         selectPackage();
         delay(5000);
-        scrollDown(2);
+        scrollDown(3);
         clickOptionType();
         clickNumberOfDays();
         delay(500);
@@ -95,7 +121,7 @@ public class App13OtherTest {
         selectESIM();
         selectPackage();
         delay(5000);
-        scrollDown(3);
+        scrollDown(4);
         clickOptionType();
         clickNumberOfDays();
         delay(500);
@@ -120,7 +146,7 @@ public class App13OtherTest {
         selectESIM();
         selectPackage();
         delay(5000);
-        scrollDown(4);
+        scrollDown(5);
         clickOptionType();
         clickNumberOfDays();
         delay(500);
@@ -193,29 +219,52 @@ public class App13OtherTest {
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
         WebElement nameField = wait
                 .until(ExpectedConditions
-                        .visibilityOfElementLocated(By.cssSelector("#contactModule > div > div:nth-child(1) > div > input")));
+                        .visibilityOfElementLocated(
+                                By.cssSelector("#contactModule > div > div:nth-child(1) > div > input")));
         Actions actions = new Actions(app.getDriver());
         actions.moveToElement(nameField);
         nameField.clear();
         nameField.sendKeys(Name);
 
-
         WebElement emailField = wait
-            .until(ExpectedConditions
-                .visibilityOfElementLocated(By.cssSelector("#contactModule > div > div:nth-child(3) > div > div.input-com-container > input")));
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector(
+                                "#contactModule > div > div:nth-child(3) > div > div.input-com-container > input")));
         emailField.clear();
         emailField.sendKeys(email);
 
         WebElement bodyElement = wait
-        .until(ExpectedConditions
-            .visibilityOfElementLocated(By.tagName("body")));
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.tagName("body")));
         bodyElement.click();
-                        
+
         WebElement phoneField = wait
-            .until(ExpectedConditions
-                .visibilityOfElementLocated(By.cssSelector("#region-selector-component > div > input")));
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By.cssSelector("#region-selector-component > div > input")));
         phoneField.clear();
         phoneField.sendKeys(phone);
+    }
+    
+    @Step("Verify Fail Book Car Transfer Invalid Phone")
+    private void verifySuccessBookeSIM() {
+        driver = app.getDriver();
+
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector(
+                "#__next > div > section > div.home-index-pc-box > main > div > div.trip-pc-col.gutter-row.trip-pc-col-xs-24.trip-pc-col-xs-order-2.trip-pc-col-md-16.trip-pc-col-md-order-1 > div > div.payment-column-wrapper > div.payment-column-wrapper-title > span.payment-column-wrapper-title-box");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
     }
 
     @Step("Select eSIM")

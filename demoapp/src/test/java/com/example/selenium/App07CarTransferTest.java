@@ -16,7 +16,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -110,8 +109,6 @@ public class App07CarTransferTest {
     public void TC037_FailedBookTransferCarEmptyField() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
-        navigateToCarTransferPage();
-        selectCarTransfer();
         clickDropOff();
         inputPickUpPoint("Houston");
         selectInputPoint();
@@ -134,8 +131,6 @@ public class App07CarTransferTest {
     public void TC038_FailedBookTransferCarInvalidEmail() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
-        navigateToCarTransferPage();
-        selectCarTransfer();
         clickDropOff();
         inputPickUpPoint("Houston");
         selectInputPoint();
@@ -159,8 +154,6 @@ public class App07CarTransferTest {
     public void TC039_FailedBookTransferCarInvalidPhone() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
-        navigateToCarTransferPage();
-        selectCarTransfer();
         clickDropOff();
         inputPickUpPoint("Houston");
         selectInputPoint();
@@ -173,6 +166,29 @@ public class App07CarTransferTest {
         clickContinue();
         verifyFailedBookCarInvalidPhone();
         takeScreenshot("TC039_FailedBookTransferCarInvalidPhone");
+        resetCarTransferPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+
+    @Test
+    @Feature("TC039 Success book Transfer Car")
+    public void TC040_SuccessBookTransferCar() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+        clickDropOff();
+        inputPickUpPoint("Houston");
+        selectInputPoint();
+        selectAirPort();
+        selectDate();
+        selectTime();
+        searchButtonClick2();
+        selectCars();
+        inputBookingField("akun", "istts", "akunistts@gmail.com", "85246888888");
+        clickContinue();
+        verifySuccessBookCar();
+        takeScreenshot("TC040_SuccessBookTransferCar");
         resetCarTransferPage();
 
         String endTime = getCurrentTimestamp();
@@ -570,6 +586,28 @@ public class App07CarTransferTest {
 
         By successElementSelector = By.cssSelector(
                 "#__next > div.booking-page.booking-page-newversion > div > div.section-left > div.contact-info > div.form-wrapper > div.form-phone-wrapper > div.tripui-online-input.form-phone > div.tripui-online-input-help-text.error > div > span");
+
+        // Wait for the element to be visible
+        WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));
+
+        // Assert the element is displayed
+        Assert.assertTrue(successElement.isDisplayed(), "Success element not displayed!");
+    }
+
+    @Step("Verify Fail Book Car Transfer Invalid Phone")
+    private void verifySuccessBookCar() {
+        driver = app.getDriver();
+
+        // Wait for the new tab or page to load
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+
+        // Switch to the newly opened tab if applicable
+        for (String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+        }
+
+        By successElementSelector = By.cssSelector(
+                "#__next > div > section > div.home-index-pc-box > main > div > div.trip-pc-col.gutter-row.trip-pc-col-xs-24.trip-pc-col-xs-order-2.trip-pc-col-md-16.trip-pc-col-md-order-1 > div > div.payment-column-wrapper > div.payment-column-wrapper-title > span.payment-column-wrapper-title-box");
 
         // Wait for the element to be visible
         WebElement successElement = wait.until(ExpectedConditions.visibilityOfElementLocated(successElementSelector));

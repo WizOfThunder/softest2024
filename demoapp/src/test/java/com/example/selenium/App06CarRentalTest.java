@@ -189,6 +189,24 @@ public class App06CarRentalTest {
         setUpBook();
         selectCars();
         delay(10000);
+        inputBookingField("akun", "istts", "akunistts@gmail.com", "85246888888", "U", 4);
+        clickBookNow();
+        verifyFailedBookCarInvalidFlight();
+        takeScreenshot("TC032_FailedBookCarRentalsInvalidFlight");
+        resetCarRentalPage();
+
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
+    
+    @Test
+    @Feature("TC032 Failed book Transfer Car (Invalid Flight Number)")
+    public void TC033_SuccessBookCarRentals() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+        setUpBook();
+        selectCars();
+        delay(10000);
         inputBookingField("akun", "istts","akunistts@gmail.com" , "85246888888", "UA035",4);
         clickBookNow();
         verifyFailedBookCarInvalidFlight();
