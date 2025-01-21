@@ -84,6 +84,7 @@ public class App13OtherTest {
         delay(500);
         takeScreenshot("TC085_testFailBookSIMEmptyField");
         resetPage();
+        
 
         String endTime = getCurrentTimestamp();
         attachTimestamp("Test End Time", endTime);
