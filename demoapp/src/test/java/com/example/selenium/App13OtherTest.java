@@ -60,7 +60,9 @@ public class App13OtherTest {
         clickPay();
         delay(2000);
         verifySuccessBookeSIM();
+        delay(2000);
         takeScreenshot("TC084_testSuccessBookSIMEmptyField");
+        
         resetPage();
 
         String endTime = getCurrentTimestamp();
@@ -104,6 +106,7 @@ public class App13OtherTest {
         clickBookNow();
         clickPay();
         verifyFailBookSIMNoContact();
+        delay(2000);
         takeScreenshot("TC086_testFailBookSIMEmptyContact");
         resetPage();
 
@@ -129,6 +132,7 @@ public class App13OtherTest {
         inputBookingField("akun", "akun", "85246888888");
         clickPay();
         verifyFailBookSIMInvalidEmail();
+        delay(2000);
         takeScreenshot("TC087_testFailBookSIMInvalidEmail");
         resetPage();
 
@@ -154,6 +158,7 @@ public class App13OtherTest {
         inputBookingField("akun", "akunistts@gmail.com", "0");
         clickPay();
         verifyFailBookSIMInvalidPhone();
+        delay(2000);
         takeScreenshot("TC088_testFailBookSIMInvalidPhone");
         resetPage();
 
