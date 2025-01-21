@@ -199,25 +199,25 @@ public class App06CarRentalTest {
         attachTimestamp("Test End Time", endTime);
     }
     
-    // @Test
-    // @Feature("TC032 Failed book Transfer Car (Invalid Flight Number)")
-    // public void TC033_SuccessBookCarRentals() {
-    //     String startTime = getCurrentTimestamp();
-    //     attachTimestamp("Test Start Time", startTime);
-    //     navigateToCarRentalPage();
-    //     selectCarRental();
-    //     setUpBook();
-    //     selectCars();
-    //     delay(10000);
-    //     inputBookingField("akun", "istts","akunistts@gmail.com" , "85246888888", "UA035",1);
-    //     clickBookNow();
-    //     verifyFailedBookCarInvalidFlight();
-    //     // takeScreenshot("TC032_FailedBookCarRentalsInvalidFlight");
-    //     // resetCarRentalPage();
+    @Test
+    @Feature("TC033 Success book Transfer Car")
+    public void TC033_SuccessBookCarRentals() {
+        String startTime = getCurrentTimestamp();
+        attachTimestamp("Test Start Time", startTime);
+        navigateToCarRentalPage();
+        selectCarRental();
+        setUpBook();
+        selectCars();
+        delay(10000);
+        inputBookingField("akun", "istts","akunistts@gmail.com" , "85246888888", "UA035",1);
+        clickBookNow();
+        verifyFailedBookCarInvalidFlight();
+        takeScreenshot("TC033_SuccessBookCarRentals");
+        // resetCarRentalPage();
 
-    //     String endTime = getCurrentTimestamp();
-    //     attachTimestamp("Test End Time", endTime);
-    // }
+        String endTime = getCurrentTimestamp();
+        attachTimestamp("Test End Time", endTime);
+    }
 
     @Step("Navigate to cars page")
     private void navigateToCarRentalPage() {

@@ -173,10 +173,11 @@ public class App07CarTransferTest {
     }
 
     @Test
-    @Feature("TC039 Success book Transfer Car")
+    @Feature("TC040 Success book Transfer Car")
     public void TC040_SuccessBookTransferCar() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
+        resetCarTransferPage();
         clickDropOff();
         inputPickUpPoint("Houston");
         selectInputPoint();

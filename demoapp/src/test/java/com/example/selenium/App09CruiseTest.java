@@ -144,10 +144,10 @@ public class App09CruiseTest {
     public void TC052_testFailedBookCruiseInvalidID() {
         String startTime = getCurrentTimestamp();
         attachTimestamp("Test Start Time", startTime);
-
+        resetCruisePage();
         setUpCruiseBook();
-        selectCruise(9);
-        clickSelectRoom(10);
+        selectCruise(1);
+        clickSelectRoom(2);
         selectCruiseRoom();
         inputBookingField("akun", "akunistts@gmail.com", "85246888888", 0);
         inputGuestField("akun", "istts", "jakarta", "85246888888", "1234-5678-9012-3456");
@@ -394,7 +394,15 @@ public class App09CruiseTest {
                 .until(ExpectedConditions
                         .visibilityOfElementLocated(By.cssSelector(
                                 "body > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1)")));
-        actions.moveToElement(done).perform();
+        //actions.moveToElement(done).perform();
+        ((JavascriptExecutor) app.getDriver()).executeScript("arguments[0].scrollIntoView({block: 'center'});", done);
+
+        // Add a small wait to ensure the scroll is complete
+        try {
+            Thread.sleep(500); // Adjust duration as needed
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         done.click();
 
          WebElement expDate = wait
