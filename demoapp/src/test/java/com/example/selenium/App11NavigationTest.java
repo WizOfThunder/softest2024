@@ -142,7 +142,7 @@ public class App11NavigationTest
     @Step("Click Promo")
     private void clickPromo(int number){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement promo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='deals']/div/div[1]/div/div['"+ number +"']/div/a/img")));
+        WebElement promo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='deals']/div[2]/div[2]/div/div["+(number+1)+"]/div/a/img")));
         promo.click();
     }
 
