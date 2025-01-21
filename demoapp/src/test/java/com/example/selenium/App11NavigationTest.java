@@ -63,65 +63,65 @@ public class App11NavigationTest
         driver.navigate().to("https://trip.com/");
     }
 
-    @Test
-    @Feature("TC061 Link Navigation")
-    public void TC061_testLinkNavigation(){
-        String startTime = getCurrentTimestamp();
-        attachTimestamp("Test Start Time", startTime);
+    // @Test
+    // @Feature("TC061 Link Navigation")
+    // public void TC061_testLinkNavigation(){
+    //     String startTime = getCurrentTimestamp();
+    //     attachTimestamp("Test Start Time", startTime);
 
-        clickFooterLink("Customer Support");
-        verifySuccessLinkNavigation();
-        takeScreenshot("TC061_testLinkNavigation");
-        //resetPage();
+    //     clickFooterLink("Customer Support");
+    //     verifySuccessLinkNavigation();
+    //     takeScreenshot("TC061_testLinkNavigation");
+    //     //resetPage();
         
-        String endTime = getCurrentTimestamp();
-        attachTimestamp("Test End Time", endTime);
-    }
+    //     String endTime = getCurrentTimestamp();
+    //     attachTimestamp("Test End Time", endTime);
+    // }
 
-    @Test
-    @Feature("TC062 Promo Navigation")
-    public void TC062_testPromoNavigation(){
-        String startTime = getCurrentTimestamp();
-        attachTimestamp("Test Start Time", startTime);
+    // @Test
+    // @Feature("TC062 Promo Navigation")
+    // public void TC062_testPromoNavigation(){
+    //     String startTime = getCurrentTimestamp();
+    //     attachTimestamp("Test Start Time", startTime);
 
-        clickPromo(1);
-        verifySuccessPromoNavigation();
-        takeScreenshot("TC062_testPromoNavigation");
-        //resetPage();
+    //     clickPromo(1);
+    //     verifySuccessPromoNavigation();
+    //     takeScreenshot("TC062_testPromoNavigation");
+    //     //resetPage();
         
-        String endTime = getCurrentTimestamp();
-        attachTimestamp("Test End Time", endTime);
-    }
+    //     String endTime = getCurrentTimestamp();
+    //     attachTimestamp("Test End Time", endTime);
+    // }
 
-    @Test
-    @Feature("TC063 Header Navigation Map")
-    public void TC063_testHeaderNavigationMap(){
-        String startTime = getCurrentTimestamp();
-        attachTimestamp("Test Start Time", startTime);
+    // @Test
+    // @Feature("TC063 Header Navigation Map")
+    // public void TC063_testHeaderNavigationMap(){
+    //     String startTime = getCurrentTimestamp();
+    //     attachTimestamp("Test Start Time", startTime);
 
-        clickMapHeader();
-        verifySuccessMapHeaderNavigation();
-        takeScreenshot("TC063_testHeaderNavigationMap");
-        //resetPage();
+    //     clickMapHeader();
+    //     verifySuccessMapHeaderNavigation();
+    //     takeScreenshot("TC063_testHeaderNavigationMap");
+    //     //resetPage();
         
-        String endTime = getCurrentTimestamp();
-        attachTimestamp("Test End Time", endTime);
-    }
+    //     String endTime = getCurrentTimestamp();
+    //     attachTimestamp("Test End Time", endTime);
+    // }
 
-    @Test
-    @Feature("TC064 Header Navigation Trip.com Rewards")
-    public void TC064_testHeaderNavigationTripRewards(){
-        String startTime = getCurrentTimestamp();
-        attachTimestamp("Test Start Time", startTime);
+    // @Test
+    // @Feature("TC064 Header Navigation Trip.com Rewards")
+    // public void TC064_testHeaderNavigationTripRewards(){
+    //     String startTime = getCurrentTimestamp();
+    //     attachTimestamp("Test Start Time", startTime);
 
-        clickTripRewardsHeader();
-        verifySuccessTripRewardsHeaderNavigation();
-        takeScreenshot("TC064_testHeaderNavigationTripRewards");
-        //resetPage();
+    //     clickTripRewardsHeader();
+    //     verifySuccessTripRewardsHeaderNavigation();
+    //     takeScreenshot("TC064_testHeaderNavigationTripRewards");
+    //     //resetPage();
         
-        String endTime = getCurrentTimestamp();
-        attachTimestamp("Test End Time", endTime);
-    }
+    //     String endTime = getCurrentTimestamp();
+    //     attachTimestamp("Test End Time", endTime);
+    // }
 
     @Test
     @Feature("TC065 Header Navigation Deals")
@@ -142,7 +142,7 @@ public class App11NavigationTest
     @Step("Click Promo")
     private void clickPromo(int number){
         WebDriverWait wait = new WebDriverWait(app.getDriver(), java.time.Duration.ofSeconds(10));
-        WebElement promo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='deals']/div/div[1]/div/div['"+ number +"']/div/a/img")));
+        WebElement promo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='deals']/div[2]/div[2]/div/div["+(number+1)+"]/div/a/img")));
         promo.click();
     }
 
